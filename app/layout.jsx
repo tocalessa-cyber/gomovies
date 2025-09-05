@@ -4,16 +4,16 @@ import Footer from '../components/layout/Footer';
 import AdsterraLayoutWrapper from '../components/AdsterraLayoutWrapper';
 
 export const metadata = {
-  title: 'HiMovies | Free HD Movie & TV Show Streaming',
+  title: 'Himovies | Free HD Movie & TV Show Streaming',
   description: 'Watch the latest movies and TV shows for free in HD quality. Explore thousands of movie and TV series titles without limits.',
   openGraph: {
     title: 'Himovies | Free HD Movie & TV Show Streaming',
     description: 'Watch the latest movies and TV shows for free in HD quality. Explore thousands of movie and TV series titles without limits.',
-    url: 'https://Himovies-US.netlify.app/',
+    url: 'https://himovies-us.netlify.app/',
     siteName: 'Himovies',
     images: [
       {
-        url: 'https://himovies.vercel.app/og-image.jpg',
+        url: 'https://placehold.co/1200x630/000000/FFFFFF?text=Himovies',
         width: 1200,
         height: 630,
         alt: 'Himovies - Free HD Movie & TV Show Streaming',
@@ -21,6 +21,8 @@ export const metadata = {
     ],
     locale: 'id_ID',
     type: 'website',
+    // Properti yang diperlukan untuk Facebook Debugger
+    appId: '100074345305108',
   },
   twitter: {
     card: 'summary_large_image',
@@ -28,7 +30,7 @@ export const metadata = {
     creator: '@WatchStream123',
     title: 'Himovies | Free HD Movie & TV Show Streaming',
     description: 'Watch the latest movies and TV shows for free in HD quality. Explore thousands of movie and TV series titles without limits.',
-    images: ['https://himovies.vercel.app/og-image.jpg'],
+    images: ['https://placehold.co/1200x630/000000/FFFFFF?text=Himovies'],
   },
 };
 
