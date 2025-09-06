@@ -64,7 +64,10 @@ export async function generateMetadata({ params }) {
 
   const tvShowTitle = tvShowData.name || 'Serial TV Tanpa Judul';
   const tvShowDescription = tvShowData.overview || 'Sinopsis tidak tersedia.';
-  const tvShowImageUrl = tvShowData.poster_path ? `https://image.tmdb.org/t/p/w1280${tvShowData.poster_path}` : '';
+  
+  // LOGIKA BARU: Pertama, coba gunakan backdrop_path (16:9), lalu kembali ke poster_path jika tidak tersedia.
+  const tvShowImageUrl = tvShowData.backdrop_path ? `https://image.tmdb.org/t/p/w1280${tvShowData.backdrop_path}` : tvShowData.poster_path ? `https://image.tmdb.org/t/p/w1280${tvShowData.poster_path}` : '';
+  
   const tvShowUrl = `https://himovies-us.netlify.app/tv-show/${slug}`;
 
   return {
