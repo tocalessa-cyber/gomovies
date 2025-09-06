@@ -64,7 +64,10 @@ export async function generateMetadata({ params }) {
 
   const movieTitle = movieData.title || 'Film Tanpa Judul';
   const movieDescription = movieData.overview || 'Sinopsis tidak tersedia.';
-  const movieImageUrl = movieData.poster_path ? `https://image.tmdb.org/t/p/w1280${movieData.poster_path}` : '';
+  
+  // LOGIKA BARU: Pertama, coba gunakan backdrop_path (16:9), lalu kembali ke poster_path jika tidak tersedia.
+  const movieImageUrl = movieData.backdrop_path ? `https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}` : movieData.poster_path ? `https://image.tmdb.org/t/p/w1280${movieData.poster_path}` : '';
+  
   const movieUrl = `https://himovies-us.netlify.app/movie/${slug}`;
 
   return {
