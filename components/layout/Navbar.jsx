@@ -10,7 +10,7 @@ export default function Navbar() {
           <FaVideo className="text-2xl" />
           <span className="text-xl font-bold">Himovies</span>
         </Link>
-        <div className="flex-grow flex justify-end items-center space-x-4">
+        <div className="flex-grow flex justify-end items-center space-x-3">
           <Link href="/" className="text-white hover:text-red-500 transition-colors font-bold">
             Home
           </Link>
