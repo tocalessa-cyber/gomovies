@@ -23,6 +23,72 @@ const createSlug = (item) => {
   return `${baseSlug}-${year}`;
 };
 
+// Fungsi generateMetadata untuk SEO dan OG tags
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  
+  let movieData = null;
+  const id = parseInt(slug, 10);
+
+  const slugParts = slug.split('-');
+  const lastPart = slugParts[slugParts.length - 1];
+  const slugYear = /^\d{4}$/.test(lastPart) ? lastPart : null;
+  const slugTitle = slugYear ? slugParts.slice(0, -1).join('-') : slug;
+
+  if (!isNaN(id) && slugParts.length === 1) {
+    movieData = await getMovieById(id);
+  } else {
+    const searchResults = await searchMoviesAndTv(slugTitle.replace(/-/g, ' '));
+    let matchingMovie = searchResults.find(item => {
+      const itemTitle = item.title?.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+      if (!itemTitle) {
+        return false;
+      }
+      const slugTitleClean = slugTitle.toLowerCase().replace(/-/g, '').replace(/[^a-z0-9\s]/g, '');
+      const titleMatch = itemTitle === slugTitleClean ||
+                         itemTitle.replace(/\s/g, '') === slugTitleClean;
+      const yearMatch = !slugYear || (item.release_date && item.release_date.substring(0, 4) === slugYear);
+      return item.media_type === 'movie' && titleMatch && yearMatch;
+    });
+    if (matchingMovie) {
+      movieData = await getMovieById(matchingMovie.id);
+    }
+  }
+
+  if (!movieData) {
+    return {
+      title: 'Halaman Tidak Ditemukan',
+      description: 'Halaman film yang Anda cari tidak ditemukan.'
+    };
+  }
+
+  const movieTitle = movieData.title || 'Film Tanpa Judul';
+  const movieDescription = movieData.overview || 'Sinopsis tidak tersedia.';
+  const movieImageUrl = movieData.poster_path ? `https://image.tmdb.org/t/p/w1280${movieData.poster_path}` : '';
+  const movieUrl = `https://himovies-us.netlify.app/movie/${slug}`;
+
+  return {
+    title: `${movieTitle} | Himovies`,
+    description: movieDescription,
+    alternates: {
+      canonical: movieUrl,
+    },
+    openGraph: {
+      title: `${movieTitle} | Himovies`,
+      description: movieDescription,
+      url: movieUrl,
+      type: 'website',
+      images: [
+        {
+          url: movieImageUrl,
+          alt: movieTitle,
+        },
+      ],
+      siteName: 'Himovies',
+    },
+  };
+}
+
 export default async function MoviePage({ params }) {
   const { slug } = await params;
 
