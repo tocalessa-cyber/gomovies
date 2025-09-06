@@ -13,7 +13,7 @@ export const metadata = {
     siteName: 'Himovies',
     images: [
       {
-        url: 'https://placehold.co/1200x630/000000/FFFFFF?text=Himovies',
+        url: 'https://live.staticflickr.com/65535/54768161569_c35e91f6c5_b.jpg',
         width: 1200,
         height: 630,
         alt: 'Himovies - Free HD Movie & TV Show Streaming',
@@ -30,7 +30,7 @@ export const metadata = {
     creator: '@WatchStream123',
     title: 'Himovies | Free HD Movie & TV Show Streaming',
     description: 'Watch the latest movies and TV shows for free in HD quality. Explore thousands of movie and TV series titles without limits.',
-    images: ['https://placehold.co/1200x630/000000/FFFFFF?text=Himovies'],
+    images: ['https://live.staticflickr.com/65535/54768161569_c35e91f6c5_b.jpg'],
   },
 };
 
