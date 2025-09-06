@@ -23,6 +23,73 @@ const createSlug = (item) => {
   return `${baseSlug}-${year}`;
 };
 
+// Fungsi generateMetadata untuk SEO dan OG tags
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  
+  let tvShowData = null;
+  const id = parseInt(slug, 10);
+
+  const slugParts = slug.split('-');
+  const lastPart = slugParts[slugParts.length - 1];
+  const slugYear = /^\d{4}$/.test(lastPart) ? lastPart : null;
+  const slugTitle = slugYear ? slugParts.slice(0, -1).join('-') : slug;
+
+  if (!isNaN(id) && slugParts.length === 1) {
+    tvShowData = await getTvSeriesById(id);
+  } else {
+    const searchResults = await searchMoviesAndTv(slugTitle.replace(/-/g, ' '));
+    let matchingTvShow = searchResults.find(item => {
+      const itemTitle = item.name?.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+      if (!itemTitle) {
+        return false;
+      }
+      const slugTitleClean = slugTitle.toLowerCase().replace(/-/g, '').replace(/[^a-z0-9\s]/g, '');
+      const titleMatch = itemTitle === slugTitleClean ||
+                         itemTitle.replace(/\s/g, '') === slugTitleClean;
+      const yearMatch = !slugYear || (item.first_air_date && item.first_air_date.substring(0, 4) === slugYear);
+      return item.media_type === 'tv' && titleMatch && yearMatch;
+    });
+    if (matchingTvShow) {
+      tvShowData = await getTvSeriesById(matchingTvShow.id);
+    }
+  }
+
+  if (!tvShowData) {
+    return {
+      title: 'Halaman Tidak Ditemukan',
+      description: 'Halaman serial TV yang Anda cari tidak ditemukan.'
+    };
+  }
+
+  const tvShowTitle = tvShowData.name || 'Serial TV Tanpa Judul';
+  const tvShowDescription = tvShowData.overview || 'Sinopsis tidak tersedia.';
+  const tvShowImageUrl = tvShowData.poster_path ? `https://image.tmdb.org/t/p/w1280${tvShowData.poster_path}` : '';
+  const tvShowUrl = `https://himovies-us.netlify.app/tv-show/${slug}`;
+
+  return {
+    title: `${tvShowTitle} | Himovies`,
+    description: tvShowDescription,
+    alternates: {
+      canonical: tvShowUrl,
+    },
+    openGraph: {
+      title: `${tvShowTitle} | Himovies`,
+      description: tvShowDescription,
+      url: tvShowUrl,
+      type: 'website',
+      images: [
+        {
+          url: tvShowImageUrl,
+          alt: tvShowTitle,
+        },
+      ],
+      siteName: 'Himovies',
+    },
+  };
+}
+
+
 export default async function TvShowPage({ params }) {
   const { slug } = await params;
 
@@ -111,6 +178,7 @@ export default async function TvShowPage({ params }) {
               height={750}
               className="w-full h-auto rounded-lg shadow-xl"
               priority
+              unoptimized={!posterUrl}
             />
           </div>
 
@@ -210,6 +278,7 @@ export default async function TvShowPage({ params }) {
                         width={200}
                         height={300}
                         className="w-full h-full object-cover"
+                        unoptimized={!season.poster_path}
                       />
                     ) : (
                       <div className="w-full h-48 md:h-64 bg-gray-700 flex items-center justify-center rounded-lg">
@@ -316,6 +385,7 @@ export default async function TvShowPage({ params }) {
                         width={200}
                         height={300}
                         className="w-full h-auto object-cover rounded-lg"
+                        unoptimized={!item.poster_path}
                       />
                       <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <h3 className="text-xs md:text-sm font-semibold text-white truncate mb-1">
