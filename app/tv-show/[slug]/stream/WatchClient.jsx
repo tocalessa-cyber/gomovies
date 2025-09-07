@@ -28,7 +28,7 @@ function MovieCard({ media }) {
 
     return (
         <Link href={targetUrl} passHref>
-            <div className="relative group rounded-xl overflow-hidden shadow-2xl transition-transform duration-300 transform hover:scale-105 hover:shadow-cyan-400/50 cursor-pointer">
+            <div className="relative group rounded-xl overflow-hidden shadow-2xl transition-transform duration-300 transform hover:scale-105 hover:shadow-blue-600/50 cursor-pointer">
                 <Image
                     src={posterPath}
                     alt={mediaTitle}
