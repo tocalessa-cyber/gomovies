@@ -98,7 +98,7 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
 
                     {/* Media Details */}
                     <div className="flex-grow">
-                        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-cyan-400">
+                        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-blue-600">
                             {title}
                         </h1>
                         <p className="text-gray-300 text-lg mb-4">
