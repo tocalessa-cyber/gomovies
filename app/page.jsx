@@ -40,8 +40,8 @@ export default function Home() {
       Promise.all(initialTvPromises)
     ]);
 
-    setMovieData(movieResults.map(results => results.slice(0, 12)));
-    setTvData(tvResults.map(results => results.slice(0, 12)));
+    setMovieData(movieResults.map(results => results.slice(0, 6)));
+    setTvData(tvResults.map(results => results.slice(0, 6)));
     setLoading(false);
   };
 

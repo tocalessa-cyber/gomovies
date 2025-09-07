@@ -23,6 +23,75 @@ const createSlug = (item) => {
   return `${baseSlug}-${year}`;
 };
 
+// Fungsi generateMetadata untuk SEO dan OG tags
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  
+  let movieData = null;
+  const id = parseInt(slug, 10);
+
+  const slugParts = slug.split('-');
+  const lastPart = slugParts[slugParts.length - 1];
+  const slugYear = /^\d{4}$/.test(lastPart) ? lastPart : null;
+  const slugTitle = slugYear ? slugParts.slice(0, -1).join('-') : slug;
+
+  if (!isNaN(id) && slugParts.length === 1) {
+    movieData = await getMovieById(id);
+  } else {
+    const searchResults = await searchMoviesAndTv(slugTitle.replace(/-/g, ' '));
+    let matchingMovie = searchResults.find(item => {
+      const itemTitle = item.title?.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+      if (!itemTitle) {
+        return false;
+      }
+      const slugTitleClean = slugTitle.toLowerCase().replace(/-/g, '').replace(/[^a-z0-9\s]/g, '');
+      const titleMatch = itemTitle === slugTitleClean ||
+                         itemTitle.replace(/\s/g, '') === slugTitleClean;
+      const yearMatch = !slugYear || (item.release_date && item.release_date.substring(0, 4) === slugYear);
+      return item.media_type === 'movie' && titleMatch && yearMatch;
+    });
+    if (matchingMovie) {
+      movieData = await getMovieById(matchingMovie.id);
+    }
+  }
+
+  if (!movieData) {
+    return {
+      title: 'Halaman Tidak Ditemukan',
+      description: 'Halaman film yang Anda cari tidak ditemukan.'
+    };
+  }
+
+  const movieTitle = movieData.title || 'Film Tanpa Judul';
+  const movieDescription = movieData.overview || 'Sinopsis tidak tersedia.';
+  
+  // LOGIKA BARU: Pertama, coba gunakan backdrop_path (16:9), lalu kembali ke poster_path jika tidak tersedia.
+  const movieImageUrl = movieData.backdrop_path ? `https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}` : movieData.poster_path ? `https://image.tmdb.org/t/p/w1280${movieData.poster_path}` : '';
+  
+  const movieUrl = `https://himovies-us.netlify.app/movie/${slug}`;
+
+  return {
+    title: `${movieTitle} | Himovies`,
+    description: movieDescription,
+    alternates: {
+      canonical: movieUrl,
+    },
+    openGraph: {
+      title: `${movieTitle} | Himovies`,
+      description: movieDescription,
+      url: movieUrl,
+      type: 'website',
+      images: [
+        {
+          url: movieImageUrl,
+          alt: movieTitle,
+        },
+      ],
+      siteName: 'Himovies',
+    },
+  };
+}
+
 export default async function MoviePage({ params }) {
   const { slug } = await params;
 
@@ -116,7 +185,7 @@ export default async function MoviePage({ params }) {
 
           {/* Details Section */}
           <div className="flex-1">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-orange-400 mb-2">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-blue-400 mb-2">
               {movieData.title}
             </h1>
             <p className="text-gray-300 text-lg sm:text-xl mb-4 italic">
@@ -168,7 +237,7 @@ export default async function MoviePage({ params }) {
         {/* Crew Section */}
         {crew.length > 0 && (
           <div className="mt-8 border-t border-gray-700 pt-8">
-            <h2 className="text-2xl font-bold mb-4 text-orange-400">Key Crew</h2>
+            <h2 className="text-2xl font-bold mb-4 text-blue-400">Key Crew</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {crew.map((member) => (
                 <div key={member.credit_id} className="text-center">
@@ -196,7 +265,7 @@ export default async function MoviePage({ params }) {
 
         {/* Cast Section */}
         <div className="mt-8 border-t border-gray-700 pt-8">
-          <h2 className="text-2xl font-bold mb-4 text-orange-400">Main Cast</h2>
+          <h2 className="text-2xl font-bold mb-4 text-blue-400">Main Cast</h2>
           {cast.length > 0 ? (
             <div className="flex overflow-x-auto space-x-4 pb-4 no-scrollbar">
               {cast.map((actor) => (
@@ -228,7 +297,7 @@ export default async function MoviePage({ params }) {
         {/* Trailer Section */}
         {trailer && (
           <div className="mt-8 border-t border-gray-700 pt-8">
-            <h2 className="text-2xl font-bold mb-4 text-orange-400">Trailer</h2>
+            <h2 className="text-2xl font-bold mb-4 text-blue-400">Trailer</h2>
             <div className="aspect-w-16 aspect-h-9">
               <iframe
                 className="w-full aspect-video rounded-xl shadow-lg"
@@ -244,7 +313,7 @@ export default async function MoviePage({ params }) {
 
         {/* Reviews Section */}
         <div className="mt-8 border-t border-gray-700 pt-8">
-          <h2 className="text-2xl font-bold mb-4 text-orange-400">User Reviews</h2>
+          <h2 className="text-2xl font-bold mb-4 text-blue-400">User Reviews</h2>
           {userReviews.length > 0 ? (
             <div className="space-y-4">
               {userReviews.map((review) => (
@@ -262,7 +331,7 @@ export default async function MoviePage({ params }) {
         {/* Similar Movies Section */}
         {similarMovies && similarMovies.results && similarMovies.results.length > 0 && (
           <div className="mt-8 border-t border-gray-700 pt-8">
-            <h2 className="text-2xl font-bold mb-4 text-orange-400">Similar Movies</h2>
+            <h2 className="text-2xl font-bold mb-4 text-blue-400">Similar Movies</h2>
             <div className="flex overflow-x-auto space-x-4 pb-4 no-scrollbar">
               {similarMovies.results.slice(0, 10).map(item => {
                 const itemSlug = createSlug(item);
@@ -302,6 +371,15 @@ export default async function MoviePage({ params }) {
             </div>
           </div>
         )}
+
+        {/* Tombol Streaming Bawah */}
+        <div className="mt-12 text-center">
+             <a href={`/movie/${slug}/stream`}>
+              <button className="bg-blue-600 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
+                🎬 Stream Now
+              </button>
+            </a>
+        </div>
       </div>
     </div>
   );
