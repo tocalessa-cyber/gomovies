@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import { getTvSeriesById, getSimilarTvSeries, getTvSeriesByTitle } from '../../../../lib/api';
-import WatchClient from './WatchClient.jsx';
+import { getMovieById, getSimilarMovies, getMovieByTitle } from '../../../../lib/api'; // Mengimpor fungsi baru
+import WatchClient from './WatchClient';
 
 // ===================================
 // MAIN SERVER COMPONENT
@@ -10,39 +10,39 @@ export default async function StreamPage({ params }) {
     const { slug } = await params;
 
     let id = parseInt(slug.split('-').pop(), 10);
-    let tvDetails = null;
+    let movieDetails = null;
 
-    // First, try to get the TV show ID from the end of the slug
+    // First, try to get the movie ID from the end of the slug
     if (!isNaN(id)) {
-        tvDetails = await getTvSeriesById(id);
+        movieDetails = await getMovieById(id);
     }
     
-    // If TV show details were not found using the ID, or if the slug didn't have an ID,
-    // try to get the TV show by its title.
-    if (!tvDetails) {
-        const titleSlug = slug.replace(/-\d+$/, ''); // Remove ID from slug if it exists
-        const searchResults = await getTvSeriesByTitle(titleSlug);
+    // If movie details were not found using the ID, or if the slug didn't have an ID,
+    // try to get the movie by its title.
+    if (!movieDetails) {
+        const titleSlug = slug.replace(/-\d+$/, ''); // Menghapus ID dari slug jika ada
+        const searchResults = await getMovieByTitle(titleSlug); // Menggunakan fungsi baru
         if (searchResults && searchResults.length > 0) {
             id = searchResults[0].id;
-            tvDetails = await getTvSeriesById(id);
+            movieDetails = searchResults[0];
         }
     }
 
-    // If TV show details are still not found, show a 404 page
-    if (!tvDetails) {
+    // If movie details are still not found, show a 404 page
+    if (!movieDetails) {
         notFound();
     }
 
-    // Fetch similar TV shows
-    const similarTvShows = await getSimilarTvSeries(id);
+    // Fetch similar movies
+    const similarMovies = await getSimilarMovies(id);
 
     // Pass the fetched data as props to the client component
     return (
         <WatchClient
-            mediaType="tv-show"
-            id={tvDetails.id}
-            initialDetails={tvDetails}
-            initialSimilarMedia={similarTvShows}
+            mediaType="movie"
+            id={movieDetails.id}
+            initialDetails={movieDetails}
+            initialSimilarMedia={similarMovies}
         />
     );
 }
