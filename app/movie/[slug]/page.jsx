@@ -23,7 +23,7 @@ const createSlug = (item) => {
   return `${baseSlug}-${year}`;
 };
 
-// Fungsi generateMetadata untuk SEO dan OG tags
+// generateMetadata function for SEO and OG tags
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   
@@ -57,13 +57,13 @@ export async function generateMetadata({ params }) {
 
   if (!movieData) {
     return {
-      title: 'Halaman Tidak Ditemukan',
-      description: 'Halaman film yang Anda cari tidak ditemukan.'
+      title: 'Page Not Found',
+      description: 'The movie page you are looking for was not found.'
     };
   }
 
-  const movieTitle = movieData.title || 'Film Tanpa Judul';
-  const movieDescription = movieData.overview || 'Sinopsis tidak tersedia.';
+  const movieTitle = movieData.title || 'Untitled Movie';
+  const movieDescription = movieData.overview || 'Synopsis not available.';
   
   const movieImageUrl = movieData.backdrop_path ? `https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}` : movieData.poster_path ? `https://image.tmdb.org/t/p/w1280${movieData.poster_path}` : '';
   
@@ -345,7 +345,7 @@ export default async function MoviePage({ params }) {
           </div>
         )}
 		
-		{/* Tombol Streaming Bawah */}
+		{/* Bottom Streaming Button */}
         <div className="mt-12 text-center">
              <a href={`/movie/${slug}/stream`}>
               <button className="bg-blue-600 hover:bg-red-600 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
