@@ -54,12 +54,40 @@ function MediaCard({ media, mediaType }) {
 export default function WatchClient({ mediaType, id, initialDetails, initialSimilarMedia }) {
     const [streamUrl, setStreamUrl] = useState('');
     const [title, setTitle] = useState(initialDetails.title || initialDetails.name);
-    
-    // Get similar media data from the `results` property if it exists, otherwise use the object itself
-    const similarMedia = initialSimilarMedia?.results || initialSimilarMedia || [];
+    const [similarMedia, setSimilarMedia] = useState(initialSimilarMedia?.results || initialSimilarMedia || []);
+    const [page, setPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const STREAM_BASE_URL = 'https://vidsrc.to/embed';
-    const STREAM_BASE_URL_2 = 'https://multiembed.mov/?video_id';
+    // Function to fetch data from the TMDb keyword API
+    const getEroticMovies = async (page = 1) => {
+        const API_KEY = '92d8deed10d8735da58f6777deee8a74'; 
+        const keywordId = 190370;
+        const url = `https://api.themoviedb.org/3/keyword/${keywordId}/movies?api_key=${API_KEY}&page=${page}`;
+        
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Failed to fetch erotic movies data');
+            }
+            const data = await response.json();
+            return data.results;
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
+    };
+    
+    const loadMoreMovies = async () => {
+        setIsLoading(true);
+        const nextPage = page + 1;
+        const newMovies = await getEroticMovies(nextPage);
+        setSimilarMedia(prevMovies => [...prevMovies, ...newMovies]);
+        setPage(nextPage);
+        setIsLoading(false);
+    };
+
+    const STREAM_BASE_URL = 'https://vidsrc.me/embed';
+    const STREAM_BASE_URL_2 = 'https://vidsrc.to/embed';
     const POSTER_IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
     const BACKDROP_IMAGE_URL = 'https://image.tmdb.org/t/p/original';
 
@@ -68,7 +96,7 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
         if (streamProvider === 'stream1') {
             setStreamUrl(`${STREAM_BASE_URL}/${streamPath}/${streamId}`);
         } else if (streamProvider === 'stream2') {
-            setStreamUrl(`${STREAM_BASE_URL_2}=${streamId}`);
+            setStreamUrl(`${STREAM_BASE_URL_2}/${streamPath}/${streamId}`);
         }
     };
 
@@ -77,11 +105,11 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
             <div className="container mx-auto px-4 py-8 relative z-10">
                 {/* Backdrop Section */}
                 <div className="absolute inset-0 z-0 overflow-hidden">
+                    {/* The backdrop will now always be shown if available, for both movies and TV shows. */}
                     {initialDetails.backdrop_path && (
                         <Image
                             src={`${BACKDROP_IMAGE_URL}${initialDetails.backdrop_path}`}
                             alt={`${title} backdrop`}
-                            // FIX: Use 'fill' property and CSS class properties
                             fill={true}
                             className="opacity-30 object-cover"
                         />
@@ -160,6 +188,16 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
                             {similarMedia.map((media) => (
                                 <MediaCard key={media.id} media={media} mediaType={mediaType} />
                             ))}
+                        </div>
+                        {/* Load More Button */}
+                        <div className="flex justify-center mt-8">
+                            <button
+                                onClick={loadMoreMovies}
+                                disabled={isLoading}
+                                className="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-blue-700 transition-colors disabled:bg-gray-700 disabled:cursor-not-allowed"
+                            >
+                                {isLoading ? 'Loading...' : 'Load More'}
+                            </button>
                         </div>
                     </div>
                 </div>
