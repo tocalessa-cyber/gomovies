@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { PlayCircleIcon } from 'lucide-react';
 import { notFound } from 'next/navigation';
 
@@ -10,16 +8,19 @@ import { notFound } from 'next/navigation';
 // UTILITY FUNCTIONS
 // ===================================
 
-// Component to display a movie/TV show card
+// Komponen untuk menampilkan kartu film/serial TV
 function MediaCard({ media, mediaType }) {
     if (!media) {
         return null;
     }
 
     const POSTER_IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
-    // Use the mediaType passed from the parent component, or use the type from the media object
+    // Menggunakan mediaType yang diteruskan dari komponen induk, atau menggunakan tipe dari objek media
     const cardMediaType = mediaType || media.media_type;
     const mediaTitle = media.title || media.name;
+    
+    // Mendapatkan tahun rilis
+    const releaseYear = media.release_date ? media.release_date.substring(0, 4) : 'N/A';
 
     const posterPath = media.poster_path && media.poster_path !== ""
         ? `${POSTER_IMAGE_URL}${media.poster_path}`
@@ -27,38 +28,46 @@ function MediaCard({ media, mediaType }) {
 
     const targetUrl = `/${cardMediaType}/${media.id}`;
 
-    // Check if the source is a placeholder URL
+    // Memeriksa apakah sumbernya adalah URL placeholder
     const isPlaceholder = posterPath.includes('placehold.co');
 
     return (
-        <Link href={targetUrl} passHref>
+        <a href={targetUrl}>
             <div className="relative rounded-xl overflow-hidden shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-cyan-400/50 cursor-pointer">
-                <Image
+                <img
                     src={posterPath}
                     alt={mediaTitle}
                     width={500}
                     height={750}
                     className="w-full h-auto object-cover"
-                    // Add the unoptimized property for the SVG placeholder
-                    unoptimized={isPlaceholder}
                 />
+                <div className="absolute inset-x-0 bottom-0 bg-gray-900 bg-opacity-75 p-2">
+                    <p className="text-sm font-semibold text-center truncate">{mediaTitle}</p>
+                    <p className="text-xs text-center text-gray-400">{releaseYear}</p>
+                </div>
             </div>
-        </Link>
+        </a>
     );
 }
 
 // ===================================
 // CLIENT COMPONENT
 // ===================================
-// This is a client component for interactive features
+// Ini adalah komponen klien untuk fitur interaktif
 export default function WatchClient({ mediaType, id, initialDetails, initialSimilarMedia }) {
+    
+    // Menangani kasus di mana initialDetails tidak terdefinisi, yang dapat menyebabkan TypeError
+    if (!initialDetails) {
+        return <div>Error: Movie details not found.</div>;
+    }
+
     const [streamUrl, setStreamUrl] = useState('');
     const [title, setTitle] = useState(initialDetails.title || initialDetails.name);
     const [similarMedia, setSimilarMedia] = useState(initialSimilarMedia?.results || initialSimilarMedia || []);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Function to fetch data from the TMDb keyword API
+    // Fungsi untuk mengambil data dari API kata kunci TMDb
     const getEroticMovies = async (page = 1) => {
         const API_KEY = '92d8deed10d8735da58f6777deee8a74'; 
         const keywordId = 190370;
@@ -105,13 +114,12 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
             <div className="container mx-auto px-4 py-8 relative z-10">
                 {/* Backdrop Section */}
                 <div className="absolute inset-0 z-0 overflow-hidden">
-                    {/* The backdrop will now always be shown if available, for both movies and TV shows. */}
+                    {/* Latar belakang sekarang akan selalu ditampilkan jika tersedia, baik untuk film maupun serial TV. */}
                     {initialDetails.backdrop_path && (
-                        <Image
+                        <img
                             src={`${BACKDROP_IMAGE_URL}${initialDetails.backdrop_path}`}
                             alt={`${title} backdrop`}
-                            fill={true}
-                            className="opacity-30 object-cover"
+                            className="w-full h-full object-cover absolute opacity-30"
                         />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/80 to-transparent"></div>
@@ -124,16 +132,16 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
                         {/* Poster */}
                         {initialDetails.poster_path && (
                             <div className="w-full md:w-1/3 flex-shrink-0 mb-6 md:mb-0">
-                                <Image
+                                <img
                                     src={`${POSTER_IMAGE_URL}${initialDetails.poster_path}`}
                                     alt={`${title} poster`}
                                     width={500}
                                     height={750}
                                     className="w-full h-auto rounded-xl shadow-2xl"
                                 />
-                                {/* Streaming Buttons below the poster, not centered */}
+                                {/* Tombol Streaming di bawah poster, tidak di tengah */}
                                 <div className="mt-4">
-                                    <h3 className="text-lg font-semibold mb-2">Select Streaming Source</h3>
+                                    <h3 className="text-lg font-semibold mb-2">Select Stream Source</h3>
                                     <div className="flex space-x-4">
                                         <button
                                             onClick={() => handleStream(id, 'stream1')}
@@ -157,7 +165,7 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
                             <h1 className="text-3xl font-bold mb-4 md:mb-0">{title}</h1>
                             <h2 className="text-xl md:text-2xl font-bold mb-2">Synopsis</h2>
                             <p className="text-sm md:text-base text-gray-300 mb-6">
-                                {initialDetails.overview || 'Synopsis is not available.'}
+                                {initialDetails.overview || 'Synopsis not available.'}
                             </p>
                         </div>
                     </div>
@@ -175,7 +183,7 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
                             ) : (
                                 <div className="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full text-gray-400 bg-gray-900">
                                     <PlayCircleIcon size={64} className="mb-4 text-gray-600" />
-                                    Select one button of Stream 1 or Stream 2
+                                    Select one of the Stream 1 or Stream 2 buttons
                                 </div>
                             )}
                         </div>
@@ -189,12 +197,12 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
                                 <MediaCard key={media.id} media={media} mediaType={mediaType} />
                             ))}
                         </div>
-                        {/* Load More Button */}
+                        {/* Tombol Muat Lebih Banyak */}
                         <div className="flex justify-center mt-8">
                             <button
                                 onClick={loadMoreMovies}
                                 disabled={isLoading}
-                                className="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-blue-700 transition-colors disabled:bg-gray-700 disabled:cursor-not-allowed"
+                                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-blue-700 transition-colors disabled:bg-gray-700 disabled:cursor-not-allowed"
                             >
                                 {isLoading ? 'Loading...' : 'Load More'}
                             </button>
