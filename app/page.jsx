@@ -100,7 +100,7 @@ export default function Home() {
               <div className="text-center mt-6">
                 <button
                   onClick={() => loadMoreMovies(category.key, index)}
-                  className="px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg text-white bg-blue-600 hover:bg-blue-700"
+                  className="px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg text-white bg-blue-600 hover:bg-red-700"
                 >
                   Load More
                 </button>
@@ -120,7 +120,7 @@ export default function Home() {
               <div className="text-center mt-6">
                 <button
                   onClick={() => loadMoreTv(category.key, index)}
-                  className="px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg text-white bg-blue-600 hover:bg-blue-700"
+                  className="px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg text-white bg-red-600 hover:bg-blue-700"
                 >
                   Load More
                 </button>
