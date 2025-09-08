@@ -33,7 +33,7 @@ export const metadata = {
     images: ['https://live.staticflickr.com/65535/54767992596_35dbf1a5c0_b.jpg'],
   },
   // Tambahkan tag meta eksplisit untuk Facebook
-  other: {
+   properti: {
     'fb:app_id': '100074345305108',
   },
 };
