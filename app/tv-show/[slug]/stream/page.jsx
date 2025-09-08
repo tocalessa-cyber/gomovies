@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
-import { getTvSeriesById, getSimilarTvSeries, searchMoviesAndTv } from '../../../../lib/api'; 
+import { getTvSeriesById, getSimilarTvSeries, searchMoviesAndTv } from '../../../../lib/api';
 import WatchClient from './WatchClient';
 
-// Utility function to create a slug from a TV show title
+// Fungsi utilitas untuk membuat slug dari judul TV show
 const createSlug = (item) => {
   const title = item.name;
   if (!title) return '';
@@ -15,27 +15,46 @@ const createSlug = (item) => {
   return `${baseSlug}-${year}`;
 };
 
+// Fungsi untuk mengambil data dari endpoint API kata kunci TMDb
+const getEroticMovies = async (page = 1) => {
+    const API_KEY = '92d8deed10d8735da58f6777deee8a74'; 
+    const keywordId = 190370;
+    const url = `https://api.themoviedb.org/3/keyword/${keywordId}/movies?api_key=${API_KEY}&page=${page}`;
+    
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to fetch erotic movies data');
+        }
+        const data = await response.json();
+        return data.results;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+};
+
 // ===================================
-// MAIN SERVER COMPONENT
+// KOMPONEN SERVER UTAMA
 // ===================================
-// This is a server component that fetches data and passes it to the client component.
+// Ini adalah komponen server yang mengambil data dan meneruskannya ke komponen klien.
 export default async function StreamPage({ params }) {
     const { slug } = await params;
 
     let tvDetails = null;
     const id = parseInt(slug, 10);
   
-    // Separate the slug into title and year, if a year exists
+    // Pisahkan slug menjadi judul dan tahun, jika tahun ada
     const slugParts = slug.split('-');
     const lastPart = slugParts[slugParts.length - 1];
     const slugYear = /^\d{4}$/.test(lastPart) ? lastPart : null;
     const slugTitle = slugYear ? slugParts.slice(0, -1).join('-') : slug;
   
-    // Check if the slug is a numeric ID
+    // Periksa apakah slug adalah ID numerik
     if (!isNaN(id) && slugParts.length === 1) {
       tvDetails = await getTvSeriesById(id);
     } else {
-      // Search for the TV show based on the title part of the slug
+      // Cari TV show berdasarkan bagian judul dari slug
       const searchResults = await searchMoviesAndTv(slugTitle.replace(/-/g, ' '));
       
       let matchingTvShow = searchResults.find(item => {
@@ -59,21 +78,21 @@ export default async function StreamPage({ params }) {
       }
     }
 
-    // If TV show details are still not found, show a 404 page
+    // Jika detail TV show masih belum ditemukan, tampilkan halaman 404
     if (!tvDetails) {
         notFound();
     }
     
-    // Fetch similar TV shows
-    const similarTvShows = await getSimilarTvSeries(tvDetails.id);
+    // Ambil film-film erotis untuk bagian "You Might Also Like"
+    const similarMedia = await getEroticMovies(1);
 
-    // Pass the fetched data as props to the client component
+    // Teruskan data yang diambil sebagai props ke komponen klien
     return (
         <WatchClient
-            mediaType="tv-show"
+            mediaType="movie"
             id={tvDetails.id}
             initialDetails={tvDetails}
-            initialSimilarMedia={similarTvShows}
+            initialSimilarMedia={similarMedia}
         />
     );
 }
