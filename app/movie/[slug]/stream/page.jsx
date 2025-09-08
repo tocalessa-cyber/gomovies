@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getMovieById, getSimilarMovies, getMovieByTitle, searchMoviesAndTv } from '../../../../lib/api'; 
+import { getMovieById, getMovieByTitle, searchMoviesAndTv } from '../../../../lib/api'; 
 import WatchClient from './WatchClient';
 
 // Utility function to create a slug from a movie title
@@ -13,6 +13,27 @@ const createSlug = (item) => {
     year = item.release_date.substring(0, 4);
   }
   return `${baseSlug}-${year}`;
+};
+
+// Function to fetch data from the TMDb keyword API
+const getEroticMovies = async (page = 1) => {
+    const API_KEY = '92d8deed10d8735da58f6777deee8a74'; 
+    const keywordId = 190370;
+
+    const url = `https://api.themoviedb.org/3/keyword/${keywordId}/movies?api_key=${API_KEY}&page=${page}`;
+    console.log('Fetching from URL:', url); // Log the URL being fetched
+
+    const response = await fetch(url);
+
+    // Add logs for response status and error text
+    console.log('Response status:', response.status);
+    if (!response.ok) {
+        console.error('API Error:', await response.text());
+        throw new Error('Failed to fetch erotic movies data');
+    }
+
+    const data = await response.json();
+    return data.results; // The API returns an array of movies in the 'results' property
 };
 
 // ===================================
@@ -64,10 +85,11 @@ export default async function StreamPage({ params }) {
         notFound();
     }
     
-    // Fetch similar movies
-    const similarMovies = await getSimilarMovies(movieDetails.id);
+    // Fetch similar movies from the keyword endpoint instead of the original movie ID
+    // We start with page 1
+    const similarMovies = await getEroticMovies(1);
 
-    // Pass the fetched data as props to the client component
+    // Pass the fetched data and the loading function to the client component
     return (
         <WatchClient
             mediaType="movie"
