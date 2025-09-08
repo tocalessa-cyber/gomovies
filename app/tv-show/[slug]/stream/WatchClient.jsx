@@ -11,126 +11,131 @@ import { notFound } from 'next/navigation';
 // ===================================
 
 // Component to display a movie/TV show card
-function MovieCard({ media }) {
+function MediaCard({ media, mediaType }) {
     if (!media) {
         return null;
     }
 
     const POSTER_IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
-    const mediaType = media.media_type || 'movie';
+    // Use the mediaType passed from the parent component, or use the type from the media object
+    const cardMediaType = mediaType || media.media_type;
     const mediaTitle = media.title || media.name;
 
     const posterPath = media.poster_path && media.poster_path !== ""
         ? `${POSTER_IMAGE_URL}${media.poster_path}`
         : 'https://placehold.co/500x750?text=No+Image';
 
-    const targetUrl = `/${mediaType}/${media.id}`;
+    const targetUrl = `/${cardMediaType}/${media.id}`;
+
+    // Check if the source is a placeholder URL
+    const isPlaceholder = posterPath.includes('placehold.co');
 
     return (
         <Link href={targetUrl} passHref>
-            <div className="relative group rounded-xl overflow-hidden shadow-2xl transition-transform duration-300 transform hover:scale-105 hover:shadow-blue-400/50 cursor-pointer">
+            <div className="relative rounded-xl overflow-hidden shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-cyan-400/50 cursor-pointer">
                 <Image
                     src={posterPath}
                     alt={mediaTitle}
                     width={500}
                     height={750}
-                    className="w-full h-auto object-cover rounded-xl"
-                    unoptimized // Fix: Added unoptimized for the placeholder image
+                    className="w-full h-auto object-cover"
+                    // Add the unoptimized property for the SVG placeholder
+                    unoptimized={isPlaceholder}
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-sm md:text-lg font-bold text-white mb-2 truncate">
-                        {mediaTitle}
-                    </h3>
-                    {media.release_date && (
-                        <span className="text-xs md:text-sm text-gray-400">
-                            ({media.release_date.substring(0, 4)})
-                        </span>
-                    )}
-                </div>
             </div>
         </Link>
     );
 }
 
 // ===================================
-// MAIN CLIENT COMPONENT
+// CLIENT COMPONENT
 // ===================================
+// This is a client component for interactive features
 export default function WatchClient({ mediaType, id, initialDetails, initialSimilarMedia }) {
-    // Check if initial data is valid. If not, return a not found message.
-    if (!initialDetails || !initialSimilarMedia) {
-        // This should ideally be handled by the server component, but this is a fallback.
-        return notFound();
-    }
+    const [streamUrl, setStreamUrl] = useState('');
+    const [title, setTitle] = useState(initialDetails.title || initialDetails.name);
+    
+    // Get similar media data from the `results` property if it exists, otherwise use the object itself
+    const similarMedia = initialSimilarMedia?.results || initialSimilarMedia || [];
 
-    const [details] = useState(initialDetails);
-    const [similarMedia] = useState(initialSimilarMedia);
-    const [streamUrl, setStreamUrl] = useState(null);
+    const STREAM_BASE_URL = 'https://vidsrc.to/embed';
+    const STREAM_BASE_URL_2 = 'https://multiembed.mov/?video_id';
+    const POSTER_IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
+    const BACKDROP_IMAGE_URL = 'https://image.tmdb.org/t/p/original';
 
-    const title = details.title || details.name;
-
-    // Fungsi untuk mendapatkan URL streaming dari Vidsrc
-    const getVidsrcUrl = (source) => {
-        const vidsrcBaseUrl = source === 'vidsrc.me' ? 'https://vidsrc.me/embed/' : 'https://vidsrc.to/embed/movie/';
-        return `${vidsrcBaseUrl}${id}`;
-    };
-
-    // Handler to select the stream source
-    const handleStreamSelect = (source) => {
-        setStreamUrl(getVidsrcUrl(source));
+    const handleStream = (streamId, streamProvider) => {
+        const streamPath = mediaType === 'movie' ? 'movie' : 'tv';
+        if (streamProvider === 'stream1') {
+            setStreamUrl(`${STREAM_BASE_URL}/${streamPath}/${streamId}`);
+        } else if (streamProvider === 'stream2') {
+            setStreamUrl(`${STREAM_BASE_URL_2}=${streamId}`);
+        }
     };
 
     return (
-        <main className="bg-gray-950 text-white min-h-screen font-sans">
-            <div className="container mx-auto px-4 py-8">
-                {/* Header Section */}
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-                    {/* Media Poster */}
-                    <div className="flex-shrink-0 w-full md:w-1/3 lg:w-1/4 rounded-xl overflow-hidden shadow-2xl">
+        <main className="min-h-screen bg-gray-950 text-white font-inter">
+            <div className="container mx-auto px-4 py-8 relative z-10">
+                {/* Backdrop Section */}
+                <div className="absolute inset-0 z-0 overflow-hidden">
+                    {initialDetails.backdrop_path && (
                         <Image
-                            src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
-                            alt={title}
-                            width={500}
-                            height={750}
-                            className="w-full h-auto object-cover"
-                            unoptimized // Fix: Added unoptimized
+                            src={`${BACKDROP_IMAGE_URL}${initialDetails.backdrop_path}`}
+                            alt={`${title} backdrop`}
+                            // FIX: Use 'fill' property and CSS class properties
+                            fill={true}
+                            className="opacity-30 object-cover"
                         />
-                    </div>
-
-                    {/* Media Details */}
-                    <div className="flex-grow">
-                        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-blue-400">
-                            {title}
-                        </h1>
-                        <p className="text-gray-300 text-lg mb-4">
-                            {details.overview || 'Synopsis not available.'}
-                        </p>
-                        <div className="flex flex-wrap items-center gap-4 text-gray-400 mb-6">
-                            <span>Year: {details.release_date ? details.release_date.substring(0, 4) : 'N/A'}</span>
-                            <span>Rating: {details.vote_average ? details.vote_average.toFixed(1) : 'N/A'} / 10</span>
-                        </div>
-                    </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/80 to-transparent"></div>
                 </div>
 
-                {/* Video Player Section */}
-                <div className="mt-12">
-                    <h2 className="text-2xl font-bold mb-4">Select Streaming Source</h2>
-                    <div className="flex flex-wrap gap-4 mb-8">
-                        {/* Dummy streaming buttons. Replace with real sources. */}
-                        <button
-                            onClick={() => handleStreamSelect('vidsrc.me')}
-                            className="bg-blue-600 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg text-lg transition-transform transform hover:scale-105 shadow-md"
-                        >
-                            Stream 1
-                        </button>
-                        <button
-                            onClick={() => handleStreamSelect('vidsrc.to')}
-                            className="bg-blue-600 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg text-lg transition-transform transform hover:scale-105 shadow-md"
-                        >
-                            Stream 2
-                        </button>
+                {/* Main Content */}
+                <div className="relative z-10">
+                    {/* Movie/TV Show Details Section */}
+                    <div className="flex flex-col md:flex-row items-start md:space-x-8 mb-8">
+                        {/* Poster */}
+                        {initialDetails.poster_path && (
+                            <div className="w-full md:w-1/3 flex-shrink-0 mb-6 md:mb-0">
+                                <Image
+                                    src={`${POSTER_IMAGE_URL}${initialDetails.poster_path}`}
+                                    alt={`${title} poster`}
+                                    width={500}
+                                    height={750}
+                                    className="w-full h-auto rounded-xl shadow-2xl"
+                                />
+                                {/* Streaming Buttons below the poster, not centered */}
+                                <div className="mt-4">
+                                    <h3 className="text-lg font-semibold mb-2">Select Streaming Source</h3>
+                                    <div className="flex space-x-4">
+                                        <button
+                                            onClick={() => handleStream(id, 'stream1')}
+                                            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg"
+                                        >
+                                            Stream 1
+                                        </button>
+                                        <button
+                                            onClick={() => handleStream(id, 'stream2')}
+                                            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg"
+                                        >
+                                            Stream 2
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Synopsis */}
+                        <div className="md:w-2/3">
+                            <h1 className="text-3xl font-bold mb-4 md:mb-0">{title}</h1>
+                            <h2 className="text-xl md:text-2xl font-bold mb-2">Synopsis</h2>
+                            <p className="text-sm md:text-base text-gray-300 mb-6">
+                                {initialDetails.overview || 'Synopsis is not available.'}
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="relative aspect-video bg-gray-900 rounded-xl overflow-hidden shadow-2xl">
+                    {/* Video Player Section */}
+                    <div className="w-full aspect-video rounded-lg overflow-hidden shadow-2xl bg-gray-900 relative">
                         <div className="w-full h-full">
                             {streamUrl ? (
                                 <iframe
@@ -147,15 +152,15 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
                             )}
                         </div>
                     </div>
-                </div>
 
-                {/* "You might also like" section */}
-                <div className="mt-12">
-                    <h2 className="text-2xl font-bold mb-6">You Might Also Like</h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                        {similarMedia.map((media) => (
-                            <MovieCard key={media.id} media={media} />
-                        ))}
+                    {/* "You Might Also Like" Section */}
+                    <div className="mt-12">
+                        <h2 className="text-2xl font-bold mb-6">You Might Also Like</h2>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                            {similarMedia.map((media) => (
+                                <MediaCard key={media.id} media={media} mediaType={mediaType} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
