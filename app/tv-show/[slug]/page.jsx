@@ -23,7 +23,7 @@ const createSlug = (item) => {
   return `${baseSlug}-${year}`;
 };
 
-// Fungsi generateMetadata untuk SEO dan OG tags
+// Generate metadata function for SEO and OG tags
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   
@@ -57,13 +57,13 @@ export async function generateMetadata({ params }) {
 
   if (!tvShowData) {
     return {
-      title: 'Halaman Tidak Ditemukan',
-      description: 'Halaman serial TV yang Anda cari tidak ditemukan.'
+      title: 'Page Not Found',
+      description: 'The TV series page you are looking for could not be found.'
     };
   }
 
-  const tvShowTitle = tvShowData.name || 'Serial TV Tanpa Judul';
-  const tvShowDescription = tvShowData.overview || 'Sinopsis tidak tersedia.';
+  const tvShowTitle = tvShowData.name || 'Untitled TV Series';
+  const tvShowDescription = tvShowData.overview || 'Synopsis not available.';
   
   const tvShowImageUrl = tvShowData.backdrop_path ? `https://image.tmdb.org/t/p/w1280${tvShowData.backdrop_path}` : tvShowData.poster_path ? `https://image.tmdb.org/t/p/w1280${tvShowData.poster_path}` : '';
   
@@ -407,7 +407,7 @@ export default async function TvShowPage({ params }) {
           </div>
         )}
 		
-		{/* Tombol Streaming Bawah */}
+		{/* Bottom Stream Button */}
         <div className="mt-12 text-center">
              <a href={`/tv-show/${slug}/stream`}>
               <button className="bg-blue-600 hover:bg-red-600 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
