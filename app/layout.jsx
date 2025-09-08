@@ -22,7 +22,7 @@ export const metadata = {
     locale: 'id_ID',
     type: 'website',
     // Properti yang diperlukan untuk Facebook Debugger
-    appId: '100074345305108',
+    app_id: '100074345305108',
   },
   twitter: {
     card: 'summary_large_image',
