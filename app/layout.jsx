@@ -22,7 +22,7 @@ export const metadata = {
     locale: 'id_ID',
     type: 'website',
     // Properti yang diperlukan untuk Facebook Debugger
-    app_id: '100074345305108',
+    appId: '100074345305108',
   },
   twitter: {
     card: 'summary_large_image',
@@ -31,6 +31,10 @@ export const metadata = {
     title: 'Himovies | Free HD Movie & TV Show Streaming',
     description: 'Watch the latest movies and TV shows for free in HD quality. Explore thousands of movie and TV series titles without limits.',
     images: ['https://live.staticflickr.com/65535/54767992596_35dbf1a5c0_b.jpg'],
+  },
+  // Tambahkan tag meta eksplisit untuk Facebook
+  other: {
+    'fb:app_id': '100074345305108',
   },
 };
 
