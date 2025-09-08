@@ -121,9 +121,10 @@ export async function getTvSeriesReviews(tvId) {
 }
 
 // Fungsi untuk mencari film atau serial TV berdasarkan query
-export async function searchMoviesAndTv(query) {
+// PERBAIKAN: Menambahkan parameter `page` untuk mendukung pagination
+export async function searchMoviesAndTv(query, page = 1) {
   try {
-    const res = await fetch(`${API_URL}/search/multi?query=${encodeURIComponent(query)}`);
+    const res = await fetch(`${API_URL}/search/multi?query=${encodeURIComponent(query)}&page=${page}`);
     if (!res.ok) {
       throw new Error('Failed to fetch search results');
     }
