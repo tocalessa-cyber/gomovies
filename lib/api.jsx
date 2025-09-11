@@ -1,4 +1,5 @@
-const API_URL = 'https://tmdb-api-proxy.musadekakhmad.workers.dev';
+const API_KEY = process.env.TMDB_API_KEY;
+const API_URL = process.env.TMDB_API_URL;
 
 // Fungsi untuk mendapatkan film berdasarkan ID
 export async function getMovieById(movieId) {
