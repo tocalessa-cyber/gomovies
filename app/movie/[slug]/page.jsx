@@ -348,7 +348,7 @@ export default async function MoviePage({ params }) {
 		{/* Bottom Streaming Button */}
         <div className="mt-12 text-center">
              <a href={`/movie/${slug}/stream`}>
-              <button className="bg-blue-600 hover:bg-red-600 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
+              <button className="bg-blue-700 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
                 🎬 Stream Now
               </button>
             </a>
