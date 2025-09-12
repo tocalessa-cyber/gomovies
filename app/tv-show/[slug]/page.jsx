@@ -410,7 +410,7 @@ export default async function TvShowPage({ params }) {
 		{/* Bottom Stream Button */}
         <div className="mt-12 text-center">
              <a href={`/tv-show/${slug}/stream`}>
-              <button className="bg-blue-600 hover:bg-red-600 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
+              <button className="bg-blue-700 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
                 🎬 Stream Now
               </button>
             </a>
