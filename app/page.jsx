@@ -20,7 +20,7 @@ export default function About() {
       <div className="container mx-auto px-4 py-8 text-gray-300">
         <div className="bg-gray-800 p-8 rounded-xl shadow-lg">
           <h1 className="text-2xl md:text-3xl font-extrabold text-center mb-4 text-orange-300">
-            Gomovies123 | Watch Movies and Tv Series Free 
+            Gomovies123 | Watch Free Movies and Tv Series 
           </h1>
           <div className="mb-8 flex justify-center">
             <img
