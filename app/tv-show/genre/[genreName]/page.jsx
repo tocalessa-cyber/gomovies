@@ -40,17 +40,17 @@ export async function generateMetadata({ params }) {
 
   const title = genre?.name || 'Unknown';
   
-  const pageUrl = `https://layarkaca.vercel.app/tv-show/genre/${genreName}`;
-  const imageUrl = 'https://live.staticflickr.com/65535/54794306467_b29aef23de_b.jpg';
+  const pageUrl = `https://gomovies123.vercel.app/tv-show/genre/${genreName}`;
+  const imageUrl = 'https://live.staticflickr.com/65535/54798535098_a561ac5b6b_b.jpg';
 
   return {
-    title: `Layar Kaca - ${title} TV Series`,
+    title: `Gomovies123 - ${title} TV Series`,
     description: `Find and watch the best ${title} TV series for free on Layar Kaca.`,
     openGraph: {
-      title: `Layar Kaca - ${title} TV Series`,
+      title: `Gomovies123 - ${title} TV Series`,
       description: `Find and watch the best ${title} TV series for free on Layar Kaca.`,
       url: pageUrl,
-      siteName: 'Layar Kaca',
+      siteName: 'Gomovies123',
       images: [
         {
           url: imageUrl,
