@@ -1,4 +1,4 @@
-// app/Home/page.jsx
+123// app/Home/page.jsx
 import { getTrendingMoviesDaily, getTrendingTvSeriesDaily } from '../../lib/api';
 import TrendingClient from './page-client';
 import Head from 'next/head';
@@ -12,7 +12,7 @@ export default async function TrendingPage() {
   return (
     <>
       <Head>
-        <title>Daily Trending - Layar Kaca</title>
+        <title>Daily Trending - Gomovies123</title>
       </Head>
       <TrendingClient 
         initialMovies={trendingMovies} 
