@@ -14,17 +14,17 @@ export async function generateMetadata({ params }) {
   const genre = genres.find(g => g.name.toLowerCase().replace(/\s/g, '-') === genreName);
   const title = genre?.name || 'Unknown';
 
-  const pageUrl = `https://layarkaca.vercel.app/movie/genre/${genreName}`;
-  const imageUrl = 'https://live.staticflickr.com/65535/54794306467_b29aef23de_b.jpg';
+  const pageUrl = `https://gomovies123.vercel.app/movie/genre/${genreName}`;
+  const imageUrl = 'https://live.staticflickr.com/65535/54798535098_a561ac5b6b_b.jpg';
 
   return {
-    title: `Layar Kaca - ${title} Movies`,
-    description: `Find and watch the best ${title} movies for free on Layar Kaca.`,
+    title: `Gomovies123 - ${title} Movies`,
+    description: `Find and watch the best ${title} movies for free on Gomovies123.`,
     openGraph: {
-      title: `Layar Kaca - ${title} Movies`,
-      description: `Find and watch the best ${title} movies for free on Layar Kaca.`,
+      title: `Gomovies123 - ${title} Movies`,
+      description: `Find and watch the best ${title} movies for free on Gomovies123.`,
       url: pageUrl,
-      siteName: 'Layar Kaca',
+      siteName: 'Gomovies123',
       images: [
         {
           url: imageUrl,
@@ -40,8 +40,8 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       site: '@WatchStream123',
       creator: '@WatchStream123',
-      title: `Layar Kaca - ${title} Movies`,
-      description: `Find and watch the best ${title} movies for free on Layar Kaca.`,
+      title: `Gomovies123 - ${title} Movies`,
+      description: `Find and watch the best ${title} movies for free on Gomovies123.`,
       images: [imageUrl],
     },
     other: {
