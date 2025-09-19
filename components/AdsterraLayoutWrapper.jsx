@@ -13,7 +13,7 @@ export default function AdsterraLayoutWrapper({ children }) {
 
       // Memuat skrip iklan Native Banner
       const nativeBannerScript = document.createElement('script');
-      nativeBannerScript.src = "//discreetisabella.com/ce4c42ba51eddb0024dfa25613d/invoke.js";
+      nativeBannerScript.src = "//discreetisabella.com/75a330c0010036df621f28cf1fa626d0/invoke.js";
       nativeBannerScript.async = true;
       nativeBannerScript.setAttribute('data-cfasync', 'false');
       document.body.appendChild(nativeBannerScript);
@@ -21,14 +21,14 @@ export default function AdsterraLayoutWrapper({ children }) {
       // Memuat skrip iklan Popunder
       const popunderScript = document.createElement('script');
       popunderScript.type = 'text/javascript';
-      popunderScript.src = "//discreetisabella.com/c4/ac/5c/c4ac5cbbdf0ff844b553232a3ff.js";
+      popunderScript.src = "//discreetisabella.com/8a/d6/af/8ad6af416314aafc6add60c81ac98829.js";
       popunderScript.async = true;
       document.body.appendChild(popunderScript);
 
       // Memuat skrip iklan Social Bar
       const socialBarScript = document.createElement('script');
       socialBarScript.type = 'text/javascript';
-      socialBarScript.src = "//discreetisabella.com/38/a8/09/38a809c8d813008628915e6c653.js";
+      socialBarScript.src = "//discreetisabella.com/af/8a/3e/af8a3e31911498739f710f2973e1c485.js";
       socialBarScript.async = true;
       document.body.appendChild(socialBarScript);
   
