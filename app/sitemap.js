@@ -8,7 +8,7 @@ import {
   getTvSeriesByGenre
 } from '../lib/api';
 
-const BASE_URL = 'https://layarkaca.vercel.app';
+const BASE_URL = 'https://gomovies123.vercel.app';
 
 // Fungsi utilitas untuk membuat slug
 const createSlug = (name, year) => {
