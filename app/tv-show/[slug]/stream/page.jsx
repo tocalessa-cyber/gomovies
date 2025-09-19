@@ -15,12 +15,12 @@ const createSlug = (item) => {
   return `${baseSlug}-${year}`;
 };
 
-// Fungsi untuk mengambil data dari endpoint API kata kunci TMDb
+// Function to fetch data from the TMDb keyword API
 const getEroticMovies = async (page = 1) => {
-    const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+    const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY; 
     const keywordId = 190370;
     const url = `https://api.themoviedb.org/3/keyword/${keywordId}/movies?api_key=${API_KEY}&page=${page}`;
-    
+     
     try {
         const response = await fetch(url);
         if (!response.ok) {

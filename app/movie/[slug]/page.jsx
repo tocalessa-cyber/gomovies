@@ -1,6 +1,7 @@
+// app/movie/[slug]/page.jsx
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { FaYoutube, FaUserCircle, FaStar } from 'react-icons/fa';
+import { FaYoutube, FaUserCircle, FaStar, FaInfoCircle } from 'react-icons/fa';
 import {
   getMovieById,
   getMovieVideos,
@@ -8,14 +9,20 @@ import {
   getMovieReviews,
   searchMoviesAndTv,
   getSimilarMovies,
+  getMoviesByCategory,
+  getMovieGenres,
 } from '../../../lib/api';
+import MovieList from '../../../components/MovieList';
+import TvSeriesList from '../../../components/TvSeriesList';
+
+const CATEGORIES = ['now_playing', 'popular', 'top_rated', 'upcoming'];
 
 // Utility function to create a slug from a movie title
 const createSlug = (item) => {
   const title = item.title;
   if (!title) return '';
   const baseSlug = title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
-  
+
   let year = '';
   if (item.release_date) {
     year = item.release_date.substring(0, 4);
@@ -23,13 +30,34 @@ const createSlug = (item) => {
   return `${baseSlug}-${year}`;
 };
 
-// generateMetadata function for SEO and OG tags
+// --- BAGIAN METADATA API ---
 export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  
+  const { slug } = await params; // PERBAIKAN DI SINI
   let movieData = null;
-  const id = parseInt(slug, 10);
 
+  // Cek jika slug adalah kategori
+  if (CATEGORIES.includes(slug)) {
+    const title = slug.replace(/_/g, ' ').toUpperCase();
+    return {
+      title: `Layar Kaca - ${title} Movies`,
+      description: `Explore the ${title} movies collection on Layar Kaca.`,
+    };
+  }
+
+  // Cek jika slug adalah genre (contoh: "genre-12")
+  const genreMatch = slug.match(/^genre-(\d+)$/);
+  if (genreMatch) {
+    const genreId = genreMatch[1];
+    const genres = await getMovieGenres();
+    const genreName = genres.find(g => g.id == genreId)?.name || 'Unknown';
+    return {
+      title: `Layar Kaca - ${genreName} Movies`,
+      description: `Discover ${genreName} movies on Layar Kaca.`,
+    };
+  }
+
+  // Logika untuk halaman detail film
+  const id = parseInt(slug, 10);
   const slugParts = slug.split('-');
   const lastPart = slugParts[slugParts.length - 1];
   const slugYear = /^\d{4}$/.test(lastPart) ? lastPart : null;
@@ -40,13 +68,10 @@ export async function generateMetadata({ params }) {
   } else {
     const searchResults = await searchMoviesAndTv(slugTitle.replace(/-/g, ' '));
     let matchingMovie = searchResults.find(item => {
-      const itemTitle = item.title?.toLowerCase().replace(/[^a-z0-9\s]/g, '');
-      if (!itemTitle) {
-        return false;
-      }
+      const itemName = item.title?.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+      if (!itemName) return false;
       const slugTitleClean = slugTitle.toLowerCase().replace(/-/g, '').replace(/[^a-z0-9\s]/g, '');
-      const titleMatch = itemTitle === slugTitleClean ||
-                         itemTitle.replace(/\s/g, '') === slugTitleClean;
+      const titleMatch = itemName === slugTitleClean || itemName.replace(/\s/g, '') === slugTitleClean;
       const yearMatch = !slugYear || (item.release_date && item.release_date.substring(0, 4) === slugYear);
       return item.media_type === 'movie' && titleMatch && yearMatch;
     });
@@ -55,75 +80,120 @@ export async function generateMetadata({ params }) {
     }
   }
 
+  // Jika data tidak ditemukan, kembalikan metadata dasar
   if (!movieData) {
     return {
-      title: 'Page Not Found',
-      description: 'The movie page you are looking for was not found.'
+      title: 'Layar Kaca',
+      description: 'Find your favorite movies to stream.',
     };
   }
 
-  const movieTitle = movieData.title || 'Untitled Movie';
-  const movieDescription = movieData.overview || 'Synopsis not available.';
+  const socialImage = movieData.backdrop_path
+    ? `https://image.tmdb.org/t/p/original${movieData.backdrop_path}`
+    : movieData.poster_path
+      ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
+      : `https://placehold.co/1200x630/1f2937/d1d5db?text=${movieData.title.replace(/\s/g, '+')}`;
   
-  const movieImageUrl = movieData.backdrop_path ? `https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}` : movieData.poster_path ? `https://image.tmdb.org/t/p/w1280${movieData.poster_path}` : '';
-  
-  const movieUrl = `https://himovies-us.netlify.app/movie/${slug}`;
+  const socialImageWidth = movieData.backdrop_path ? 1200 : movieData.poster_path ? 500 : 1200;
+  const socialImageHeight = movieData.backdrop_path ? 630 : movieData.poster_path ? 750 : 630;
+  const socialImageAlt = `${movieData.title} poster`;
 
   return {
-    title: `${movieTitle} | Himovies`,
-    description: movieDescription,
-    alternates: {
-      canonical: movieUrl,
-    },
+    title: `Layar Kaca - ${movieData.title}`,
+    description: movieData.overview || `Detailed information for movie ${movieData.title}`,
     openGraph: {
-      title: `${movieTitle} | Himovies`,
-      description: movieDescription,
-      url: movieUrl,
-      type: 'website',
+      title: movieData.title,
+      description: movieData.overview || `Detailed information for movie ${movieData.title}`,
+      url: `https://layarkaca.vercel.app/movie/${slug}`,
+      siteName: 'Layar Kaca',
       images: [
         {
-          url: movieImageUrl,
-          alt: movieTitle,
+          url: socialImage,
+          width: socialImageWidth,
+          height: socialImageHeight,
+          alt: socialImageAlt,
         },
       ],
-      siteName: 'Himovies',
+      type: 'website',
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@WatchStream123',
+      creator: '@WatchStream123',
+      title: movieData.title,
+      description: movieData.overview || `Detailed information for movie ${movieData.title}`,
+      images: [socialImage],
+      imageAlt: socialImageAlt,
     },
   };
 }
+// --- AKHIR BAGIAN METADATA API ---
 
-
+// Main component
 export default async function MoviePage({ params }) {
-  const { slug } = await params;
+  const { slug } = await params; // PERBAIKAN DI SINI
 
+  // Cek jika slug adalah kategori
+  if (CATEGORIES.includes(slug)) {
+    const movies = await getMoviesByCategory(slug);
+    const title = slug.replace(/_/g, ' ').toUpperCase();
+
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-white">
+          {title} Movies
+        </h1>
+        {movies && movies.length > 0 ? (
+          <MovieList movies={movies} />
+        ) : (
+          <p className="text-center text-white">There are no movies in this category.</p>
+        )}
+      </div>
+    );
+  }
+
+  // Cek jika slug adalah genre (contoh: "genre-12")
+  const genreMatch = slug.match(/^genre-(\d+)$/);
+  if (genreMatch) {
+    const genreId = genreMatch[1];
+    const movies = await getMovieGenres();
+    const genreName = movies.find(g => g.id == genreId)?.name || 'Unknown';
+    const moviesByGenre = await getMoviesByGenre(genreId);
+
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-white">
+          {genreName} Movies
+        </h1>
+        {moviesByGenre && moviesByGenre.length > 0 ? (
+          <MovieList movies={moviesByGenre} />
+        ) : (
+          <p className="text-center text-white">There are no movies in this genre.</p>
+        )}
+      </div>
+    );
+  }
+
+  // --- Logika untuk halaman detail film ---
   let movieData = null;
   const id = parseInt(slug, 10);
 
-  // Separate the slug into title and year, if a year exists
   const slugParts = slug.split('-');
   const lastPart = slugParts[slugParts.length - 1];
   const slugYear = /^\d{4}$/.test(lastPart) ? lastPart : null;
   const slugTitle = slugYear ? slugParts.slice(0, -1).join('-') : slug;
 
-  // Check if the slug is a numeric ID
   if (!isNaN(id) && slugParts.length === 1) {
     movieData = await getMovieById(id);
   } else {
-    // Search for the movie based on the title part of the slug
     const searchResults = await searchMoviesAndTv(slugTitle.replace(/-/g, ' '));
-    
     let matchingMovie = searchResults.find(item => {
-      const itemTitle = item.title?.toLowerCase().replace(/[^a-z0-9\s]/g, '');
-      if (!itemTitle) {
-        return false;
-      }
-
+      const itemName = item.title?.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+      if (!itemName) return false;
       const slugTitleClean = slugTitle.toLowerCase().replace(/-/g, '').replace(/[^a-z0-9\s]/g, '');
-
-      const titleMatch = itemTitle === slugTitleClean ||
-                         itemTitle.replace(/\s/g, '') === slugTitleClean;
-
+      const titleMatch = itemName === slugTitleClean || itemName.replace(/\s/g, '') === slugTitleClean;
       const yearMatch = !slugYear || (item.release_date && item.release_date.substring(0, 4) === slugYear);
-      
       return item.media_type === 'movie' && titleMatch && yearMatch;
     });
 
@@ -143,7 +213,7 @@ export default async function MoviePage({ params }) {
     getSimilarMovies(movieData.id),
   ]);
 
-  const backdropUrl = movieData.backdrop_path ? `https://image.tmdb.org/t/p/original${movieData.backdrop_path}` : movieData.poster_path ? `https://image.tmdb.org/t/p/original${movieData.poster_path}` : null;
+  const backdropUrl = movieData.backdrop_path ? `https://image.tmdb.org/t/p/original${movieData.backdrop_path}` : null;
   const posterUrl = movieData.poster_path ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}` : null;
 
   const trailer = videos && videos.length > 0 ? videos.find((video) => video.site === 'YouTube' && video.type === 'Trailer') : null;
@@ -153,6 +223,7 @@ export default async function MoviePage({ params }) {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white pb-8">
+      {/* Meta OG & Twitter sekarang dikelola oleh generateMetadata */}
       {/* Backdrop Section */}
       {backdropUrl && (
         <div className="relative h-64 sm:h-96 md:h-[500px] overflow-hidden">
@@ -197,10 +268,10 @@ export default async function MoviePage({ params }) {
                 {movieData.vote_average.toFixed(1)} / 10
               </span>
               <span className="text-gray-400 text-sm">
-                {movieData.runtime ? `${Math.floor(movieData.runtime / 60)}h ${movieData.runtime % 60}m` : 'N/A'}
+                {movieData.release_date?.substring(0, 4)}
               </span>
               <span className="text-gray-400 text-sm">
-                {movieData.release_date?.substring(0, 4)}
+                {movieData.runtime ? `${Math.floor(movieData.runtime / 60)}h ${movieData.runtime % 60}m` : 'N/A'}
               </span>
             </div>
 
@@ -345,10 +416,10 @@ export default async function MoviePage({ params }) {
           </div>
         )}
 		
-		{/* Bottom Streaming Button */}
+		{/* Bottom Stream Button */}
         <div className="mt-12 text-center">
              <a href={`/movie/${slug}/stream`}>
-              <button className="bg-blue-700 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
+              <button className="bg-blue-700 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
                 🎬 Stream Now
               </button>
             </a>

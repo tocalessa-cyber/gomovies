@@ -4,33 +4,31 @@ import Footer from '../components/layout/Footer';
 import AdsterraLayoutWrapper from '../components/AdsterraLayoutWrapper';
 
 export const metadata = {
-  title: 'Himovies | Free HD Movie & TV Show Streaming',
-  description: 'Watch the latest movies and TV shows for free in HD quality. Explore thousands of movie and TV series titles without limits.',
+  title: 'Layar Kaca | Watch Stream Movies and TV Series Free HD ',
+  description: 'Layar Kaca is your one-stop destination for free movies, TV shows, and web series. Download thousands of titles in HD quality, with unlimited access to the latest blockbusters and trending series. Start your free entertainment journey today! ',
   openGraph: {
-    title: 'Himovies | Free HD Movie & TV Show Streaming',
-    description: 'Watch the latest movies and TV shows for free in HD quality. Explore thousands of movie and TV series titles without limits.',
-    url: 'https://himovies-us.netlify.app/',
-    siteName: 'Himovies',
+    title: 'Layar Kaca | Watch Stream Movies and TV Series Free HD',
+    description: 'Layar Kaca is your one-stop destination for free movies, TV shows, and web series. Download thousands of titles in HD quality, with unlimited access to the latest blockbusters and trending series. Start your free entertainment journey today! ',
+    url: 'https://layarkaca.vercel.app',
+    siteName: 'Layar Kaca',
     images: [
       {
-        url: 'https://live.staticflickr.com/65535/54767992596_35dbf1a5c0_b.jpg',
+        url: 'https://live.staticflickr.com/65535/54794306467_b29aef23de_b.jpg',
         width: 1200,
         height: 630,
-        alt: 'Himovies - Free HD Movie & TV Show Streaming',
+        alt: 'Layar Kaca - Watch Free HD Movies, TV Shows and Web Series',
       },
     ],
-    locale: 'id_ID',
+    locale: 'en_US',
     type: 'website',
-    // Properti yang diperlukan untuk Facebook Debugger
-    appId: '100074345305108',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@WatchStream123',
     creator: '@WatchStream123',
-    title: 'Himovies | Free HD Movie & TV Show Streaming',
-    description: 'Watch the latest movies and TV shows for free in HD quality. Explore thousands of movie and TV series titles without limits.',
-    images: ['https://live.staticflickr.com/65535/54767992596_35dbf1a5c0_b.jpg'],
+    title: 'Layar Kaca | Watch Stream Movies and TV Series Free HD',
+    description: 'Layar Kaca is your one-stop destination for free movies, TV shows, and web series. Download thousands of titles in HD quality, with unlimited access to the latest blockbusters and trending series. Start your free entertainment journey today!',
+    images: ['https://live.staticflickr.com/65535/54794306467_b29aef23de_b.jpg'],
   },
   // Tambahkan tag meta eksplisit untuk Facebook
   other: {
@@ -40,7 +38,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id">
+    <html lang="en">
+	  <head>
+        {/* Tag verifikasi Google Search Console */}
+        <meta name="google-site-verification" content="43U0FE_9YdrByOFa7zNlMk0hxaMxt1P1zitJs_LBJFU" />
+      </head>
       <body>
         <AdsterraLayoutWrapper>
           <div className="flex flex-col min-h-screen bg-slate-900">
@@ -52,7 +54,7 @@ export default function RootLayout({ children }) {
             </main>
             <footer className="w-full max-w-7xl mx-auto px-4 py-8">
               {/* Tempatkan div Native Banner di sini, sebelum Footer */}
-              <div id="container-f164b40cd7c6863996c9ec4da638c7c6"></div>
+              <div id="container-ce4c42ba51eddb0024dfa25613d99fda"></div>
               <Footer />
             </footer>
           </div>

@@ -159,13 +159,13 @@ export default function WatchClient({ mediaType, id, initialDetails, initialSimi
                                     <div className="flex space-x-4">
                                         <button
                                             onClick={() => handleStream(id, 'stream1')}
-                                            className="bg-green-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg"
+                                            className="bg-green-700 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg"
                                         >
                                             Stream 1
                                         </button>
                                         <button
                                             onClick={() => handleStream(id, 'stream2')}
-                                            className="bg-red-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg"
+                                            className="bg-red-700 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-transform transform hover:scale-105 shadow-lg"
                                         >
                                             Stream 2
                                         </button>

@@ -1,134 +1,189 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import MovieList from "../components/MovieList";
-import { 
-  getMoviesByCategory, 
-  getTvSeriesByCategory
-} from "../lib/api";
+import React from 'react';
+import Head from 'next/head';
 
-const MOVIE_CATEGORIES = [
-  { key: "popular", title: "Popular Movies" },
-  { key: "now_playing", title: "Now Playing" },
-  { key: "upcoming", title: "Upcoming" },
-  { key: "top_rated", title: "Top Rated" },
-];
-
-const TV_CATEGORIES = [
-  { key: "popular", title: "Popular TV Series" },
-  { key: "airing_today", title: "Airing Today" },
-  { key: "on_the_air", title: "On TV" },
-  { key: "top_rated", title: "Top Rated" },
-];
-
-export default function Home() {
-  const [movieData, setMovieData] = useState([]);
-  const [tvData, setTvData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchInitialData = async () => {
-    setLoading(true);
-    const initialMoviePromises = MOVIE_CATEGORIES.map(category =>
-      getMoviesByCategory(category.key, 1)
-    );
-    const initialTvPromises = TV_CATEGORIES.map(category =>
-      getTvSeriesByCategory(category.key, 1)
-    );
-
-    const [movieResults, tvResults] = await Promise.all([
-      Promise.all(initialMoviePromises),
-      Promise.all(initialTvPromises)
-    ]);
-
-    setMovieData(movieResults.map(results => results.slice(0, 6)));
-    setTvData(tvResults.map(results => results.slice(0, 6)));
-    setLoading(false);
-  };
-
-  const loadMoreMovies = async (categoryKey, categoryIndex) => {
-    setLoading(true);
-    const currentPage = movieData[categoryIndex].length / 6;
-    const newPage = currentPage + 1;
-    const moreMovies = await getMoviesByCategory(categoryKey, newPage);
-    
-    setMovieData(prevData => {
-      const newData = [...prevData];
-      newData[categoryIndex] = [...newData[categoryIndex], ...moreMovies.slice(0, 6)];
-      return newData;
-    });
-    setLoading(false);
-  };
-
-  const loadMoreTv = async (categoryKey, categoryIndex) => {
-    setLoading(true);
-    const currentPage = tvData[categoryIndex].length / 6;
-    const newPage = currentPage + 1;
-    const moreTv = await getTvSeriesByCategory(categoryKey, newPage);
-    
-    setTvData(prevData => {
-      const newData = [...prevData];
-      newData[categoryIndex] = [...newData[categoryIndex], ...moreTv.slice(0, 6)];
-      return newData;
-    });
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchInitialData();
-  }, []);
-
+export default function About() {
   return (
-    <main className="min-h-screen p-8 bg-slate-900 text-white">
-      <h1 className="text-5xl md:text-6xl font-extrabold text-center text-blue-400 mb-4 drop-shadow-lg">
-        Himovies
-      </h1>
-      <p className="text-xl md:text-2xl text-center text-gray-300 mb-12">
-        Your ultimate source for discovering the most popular, latest, and your favorite movies and TV series. Explore a wide-ranging collection of films and TV shows, including what's currently playing, coming soon, and top-rated.
-      </p>
+    <>
+      <Head>
+        <title>Layar Kaca - Watch Stream Movies and Tv Series Free</title>
+        <meta name="description" content="Layar Kaca offers Watch Stream Movies and Tv Series Free. Explore our comprehensive database with detailed information, reviews and trailers." />
+        <meta name="keywords" content="layar kaca, fmovies, 123movies, free movie streaming, watch movies online free, free HD movies, movie database, TV series streaming, free streaming" />
+        <meta property="og:title" content="Layar Kaca - Free HD Streaming Platform" />
+        <meta property="og:description" content="Stream movies, TV shows and web series free in HD quality on Layar Kaca. No registration required." />
+        <meta property="og:image" content="https://live.staticflickr.com/65535/54794306467_b29aef23de_b.jpg" />
+        <meta property="og:url" content="https://layarkaca.vercel.app/" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
 
-      {loading ? (
-        <p className="text-center text-gray-400">Loading data...</p>
-      ) : (
-        <>
-          {/* Render movie categories */}
-          {MOVIE_CATEGORIES.map((category, index) => (
-            <div key={category.key} className="mb-12">
-              <h2 className="text-4xl font-bold mb-4 text-center">
-                {category.title}
-              </h2>
-              <MovieList movies={movieData[index]} />
-              <div className="text-center mt-6">
-                <button
-                  onClick={() => loadMoreMovies(category.key, index)}
-                  className="px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg text-white bg-blue-600 hover:bg-red-700"
-                >
-                  Load More
-                </button>
-              </div>
+      <div className="container mx-auto px-4 py-8 text-gray-300">
+        <div className="bg-gray-800 p-8 rounded-xl shadow-lg">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-center mb-4 text-orange-300">
+            Layar Kaca | Watch Movies and Tv Series Free 
+          </h1>
+          <div className="mb-8 flex justify-center">
+            <img
+              src="https://live.staticflickr.com/65535/54794306467_b29aef23de_b.jpg"
+              alt="Film reels and movie tickets for Layar Kaca streaming platform"
+              width={1024}
+              height={416}
+              className="rounded-xl shadow-md"
+              loading="lazy"
+            />
+          </div>
+          <p className="text-center text-gray-400 mb-8">
+            Layar Kaca is not just a streaming website; it's a comprehensive portal designed for movie and TV series enthusiasts seeking free HD content.
+          </p>
+
+          <nav aria-label="Breadcrumb" className="mb-6 text-sm">
+            <ol className="flex flex-wrap">
+              <li className="hover:text-orange-300"><a href="/">Home</a></li>
+              <li className="mx-2">/</li>
+              <li aria-current="page">About Layar Kaca</li>
+            </ol>
+          </nav>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold mb-4 text-orange-300">
+              What is Layar Kaca?
+            </h2>
+            <p className="mb-4 text-justify">
+              Layar Kaca is a revolutionary free streaming platform that provides the most complete, accessible, and always up-to-date movie and TV series database. Established with the mission to provide accurate entertainment information, we offer more than just streaming - we provide detailed titles, posters, cast information, and user reviews. We believe that every film has a story behind it, and our job is to reveal it to you. With a user-friendly interface, smart search, and intuitive navigation, your experience in exploring the cinematic world will be more enjoyable and informative. We don't just focus on Hollywood blockbuster films but also embrace the diversity of cinema from all over the world, including independent films, documentaries, and international content.
+            </p>
+            <p className="mb-4 text-justify">
+              We understand that in this digital era, entertainment options are often scattered across various platforms. Layar Kaca is here as a centralized solution for free streaming. You no longer need to jump from one site to another just to find quality content. From synopses, cast lists, crew, to ratings and reviews, we present everything in one place. Our platform is designed for all audiences, whether you are an experienced film critic, a casual viewer looking for weekend entertainment, or a student researching cinema.
+            </p>
+            <p className="text-justify">
+              Every detail you find on Layar Kaca, from release dates to interesting trivia, has been carefully curated. We are committed to maintaining the quality and accuracy of information, making it a reliable source for free movie streaming. We also optimize our site for mobile devices, ensuring you can access our content anytime and anywhere, whether you are in a cafe, traveling, or relaxing at home. Layar Kaca is your loyal companion on every cinematic journey.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold mb-4 text-orange-300">
+              Top Features of Layar Kaca
+            </h2>
+            <ul className="list-disc list-inside space-y-4 pl-4">
+              <li className="text-justify">
+                <strong>Comprehensive Movie Database:</strong> Explore thousands of free movies from various decades and genres. Find popular, currently airing, upcoming, and top-rated films all in HD quality. <a href="/movies" className="text-orange-300 hover:underline">Browse our movie collection</a>.
+              </li>
+              <li className="text-justify">
+                <strong>In-depth TV Series Information:</strong> We don't forget about TV series lovers. Find popular, currently airing, on-air, and top-rated series available for free streaming. <a href="/tv-series" className="text-orange-300 hover:underline">Discover TV series</a>.
+              </li>
+              <li className="text-justify">
+                <strong>Smart and Efficient Search:</strong> Search for your favorite movies, TV series, or even actors quickly and accurately. Our search system is designed to understand your intent and provide the most relevant results for free content.
+              </li>
+              <li className="text-justify">
+                <strong>User Reviews and Ratings:</strong> Get real perspectives from other viewers through the reviews and ratings we display. This helps you make better decisions before watching free movies online.
+              </li>
+              <li className="text-justify">
+                <strong>Trailers and Videos:</strong> Watch trailers and movie clips directly on the detail page, giving you a preview of the content before you decide to stream it for free.
+              </li>
+              <li className="text-justify">
+                <strong>Free HD Streaming:</strong> Enjoy high-definition movies and TV shows without subscription fees or hidden costs, making premium entertainment accessible to everyone.
+              </li>
+            </ul>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold mb-4 text-orange-300">
+              Our Mission and Vision
+            </h2>
+            <p className="mb-4 text-justify">
+              Our mission is to be the most trusted and easily accessible free streaming source of film and TV series information globally. We want to be a bridge between cinematic art and the audience, facilitating the discovery and appreciation of various forms of visual entertainment. Our vision is to create a digital ecosystem where premium entertainment is not only available but also accessible to everyone without financial barriers. We aspire to build a solid and passionate community, where the exchange of ideas and film recommendations is common and enjoyable.
+            </p>
+            <p className="text-justify">
+              We are committed to continuously innovating and adding new features that are relevant to user needs. We listen to feedback from our community and actively implement suggestions to improve this free streaming platform. This is a project that continues to evolve, and every update, whether small or large, is dedicated to you, our valuable users. We believe that with collaboration and the same spirit, we can make Layar Kaca the number one free site for all things related to movies and TV series.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold mb-4 text-orange-300">
+              How Layar Kaca is Different
+            </h2>
+            <p className="mb-4 text-justify">
+              Amidst the sea of streaming platforms, Layar Kaca stands out for several reasons. First, we prioritize the user experience. Our interface is designed to be minimalist and clean, free from annoying pop-up ads and unnecessary elements. We want you to focus on what matters most: movies and TV series.
+            </p>
+            <p className="mb-4 text-justify">
+              Second, we are a reliable source of information because we get data directly from <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" className="text-orange-300 hover:underline">The Movie Database (TMDb)</a>, one of the largest and most prominent film databases in the world. This ensures that all the information you see, from the cast list to the release date, is the most accurate and up-to-date. TMDb is a global community that constantly verifies and updates data, and we are proud to be able to present this high-quality data to you.
+            </p>
+            <p className="mb-4 text-justify">
+              Third, we not only present movies but also TV series. This makes Layar Kaca a one-stop-shop for all your visual entertainment needs. You don't have to switch to other platforms to get information about your favorite TV shows. Everything is here, under one roof.
+            </p>
+            <p className="mb-4 text-justify">
+              Fourth, and most importantly, Layar Kaca provides completely free access to HD content without requiring registration or subscription. We believe that quality entertainment should be accessible to everyone regardless of their financial situation.
+            </p>
+            <p className="text-justify">
+              Lastly, we are a community-focused platform. We encourage users to interact, share reviews, and recommend films to their friends. We believe that the viewing experience is richer when shared with others. We are a place where you not only find movies but also find friends with similar interests.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold mb-4 text-orange-300">
+              SEO and Optimization for the Best Streaming Experience
+            </h2>
+            <p className="mb-4 text-justify">
+              We take SEO (Search Engine Optimization) seriously to ensure Layar Kaca is easily found by anyone looking for free movie and TV series streaming on the internet. This content is designed to cover relevant keywords such as "watch movies online free," "free movie streaming," "123 movies," "free HD movies," "most complete movie database," "latest movie reviews," "movie genres," and "free streaming information." The goal is that when someone types these keywords into Google or other search engines, Layar Kaca appears in the top results.
+            </p>
+            <p className="mb-4 text-justify">
+              We also optimize our website speed. With lightweight and efficient code, our pages load quickly, providing a smooth streaming experience. Site speed is an important factor in SEO and user satisfaction, and we are committed to maintaining optimal performance for buffer-free viewing.
+            </p>
+            <p className="mb-4 text-justify">
+              In addition, we ensure that all our content is accessible from various devices, whether it's a desktop, tablet, or mobile phone. With a responsive design, Layar Kaca will look and function perfectly on any screen. This is important because most internet users today access content via mobile devices.
+            </p>
+            <p className="text-justify">
+              We also use a clean and descriptive URL structure, which is not only readable by humans but also friendly to search engines. Each movie and TV series page has a URL that reflects its title, helping search engines understand the page content. We regularly monitor our SEO performance and make necessary adjustments to ensure our site remains competitive in the digital market and easily discoverable by users seeking free streaming options.
+            </p>
+          </section>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold mb-4 text-orange-300">
+              Join the Layar Kaca Community
+            </h2>
+            <p className="mb-4 text-justify">
+              Layar Kaca is a project born from a love for movies and TV series and a belief that entertainment should be free and accessible to all. We invite you to explore our site, discover new titles, and share your experiences. This site is a testament to our dedication to providing a platform that is not only informative but also inspiring and entertaining. We will continue to work hard to bring the best content and the most advanced features to you without ever charging a fee.
+            </p>
+            <p className="text-justify">
+              So, what are you waiting for? Start your cinematic adventure now! Explore our vast movie collection, find your next favorite TV series, and enjoy an unrivaled free streaming experience. We are confident you will find something new to love on Layar Kaca. Thank you for choosing us as your free movie streaming source. We are proud to serve you.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <a href="/Trending" className="bg-orange-700 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">
+                Browse Movies
+              </a>
+              <a href="/Trending" className="bg-blue-700 hover:bg-orange-700 text-white font-bold py-2 px-6 rounded">
+                Explore TV Series
+              </a>
             </div>
-          ))}
+          </section>
 
-          <hr className="my-12 border-gray-700" />
+          <div className="border-t border-gray-700 pt-6 mt-6">
+            <h3 className="text-xl font-bold mb-4 text-orange-300">Related Pages</h3>
+            <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <li><a href="/privacy-policy" className="text-orange-300 hover:underline">Privacy Policy</a></li>
+              <li><a href="/terms-of-service" className="text-orange-300 hover:underline">Terms of Service</a></li>
+              <li><a href="/contact" className="text-orange-300 hover:underline">Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-          {/* Render TV series categories */}
-          {TV_CATEGORIES.map((category, index) => (
-            <div key={category.key} className="mb-12">
-              <h2 className="text-4xl font-bold mb-4 text-center">
-                {category.title}
-              </h2>
-              <MovieList movies={tvData[index]} />
-              <div className="text-center mt-6">
-                <button
-                  onClick={() => loadMoreTv(category.key, index)}
-                  className="px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg text-white bg-red-600 hover:bg-blue-700"
-                >
-                  Load More
-                </button>
-              </div>
-            </div>
-          ))}
-        </>
-      )}
-    </main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Layar Kaca",
+            "url": "https://layarkaca.vercel.app/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://layarkaca.vercel.app/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            },
+            "description": "Watch Stream Movies and Tv Series Free without registration"
+          })
+        }}
+      />
+    </>
   );
 }
