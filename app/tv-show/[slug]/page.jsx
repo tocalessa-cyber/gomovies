@@ -103,8 +103,8 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: tvShowData.name,
       description: tvShowData.overview,
-      url: `https://layarkaca.vercel.app/tv-show/${slug}`,
-      siteName: 'Layar Kaca',
+      url: `https://gomovies123.vercel.app/tv-show/${slug}`,
+      siteName: 'Gomovies123',
       images: [{ url: socialImage, width: 1200, height: 630, alt: socialImageAlt }],
       locale: 'en_US',
       type: 'website',
