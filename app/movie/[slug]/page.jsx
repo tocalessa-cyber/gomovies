@@ -83,7 +83,7 @@ export async function generateMetadata({ params }) {
   // Jika data tidak ditemukan, kembalikan metadata dasar
   if (!movieData) {
     return {
-      title: 'Layar Kaca',
+      title: 'Gomovies123',
       description: 'Find your favorite movies to stream.',
     };
   }
@@ -99,13 +99,13 @@ export async function generateMetadata({ params }) {
   const socialImageAlt = `${movieData.title} poster`;
 
   return {
-    title: `Layar Kaca - ${movieData.title}`,
+    title: `Gomovies123 - ${movieData.title}`,
     description: movieData.overview || `Detailed information for movie ${movieData.title}`,
     openGraph: {
       title: movieData.title,
       description: movieData.overview || `Detailed information for movie ${movieData.title}`,
-      url: `https://layarkaca.vercel.app/movie/${slug}`,
-      siteName: 'Layar Kaca',
+      url: `https://gomovies123.vercel.app/movie/${slug}`,
+      siteName: 'Gomovies123',
       images: [
         {
           url: socialImage,
