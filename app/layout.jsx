@@ -9,7 +9,7 @@ export const metadata = {
   openGraph: {
     title: 'Gomovies123 | Watch Free Stream Movies and TV Series HD',
     description: 'Gomovies123 is your one-stop destination for free movies, TV shows, and web series. Download thousands of titles in HD quality, with unlimited access to the latest blockbusters and trending series. Start your free entertainment journey today! ',
-    url: 'https://layarkaca.vercel.app',
+    url: 'https://gomovies123.vercel.app',
     siteName: 'Gomovies123',
     images: [
       {
