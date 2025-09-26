@@ -46,7 +46,7 @@ export default function Footer() {
         
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-center md:text-left mb-4 md:mb-0">
-            <p className="text-sm">&copy; {year} Layar Kaca. All rights reserved.</p>
+            <p className="text-sm">&copy; {year} Gomovies123. All rights reserved.</p>
             <p className="text-xs mt-2 text-gray-500">
               Made with <FaHeart className="inline text-red-500" /> by movie lovers
             </p>
@@ -82,7 +82,7 @@ export default function Footer() {
             </a>
           </p>
           <p className="text-xs text-gray-500 mt-2">
-            Disclaimer: Layar Kaca does not host any videos or content on its server. All content is provided by non-affiliated third parties.
+            Disclaimer: Gomovies123. does not host any videos or content on its server. All content is provided by non-affiliated third parties.
           </p>
           
           <div className="mt-4 flex items-center justify-center text-sm text-gray-400 hover:text-blue-400 transition-colors">
