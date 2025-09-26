@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gomovies123.vercel.app/
+Sitemap: https://gomovies123.vercel.app/sitemap.xml
