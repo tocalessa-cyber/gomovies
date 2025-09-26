@@ -38,7 +38,7 @@ export default async function sitemap() {
       getTvSeriesGenres()
     ]);
 
-    console.log('Mengambil data untuk sitemap...');
+    console.log('Fetching data for sitemap...');
 
     // Ambil semua film dari semua kategori (halaman 1 saja)
     const movieCategoryPromises = movieCategories.map(async (category) => {
@@ -93,8 +93,8 @@ export default async function sitemap() {
       }
     });
 
-    console.log(`Jumlah film unik: ${uniqueMovies.size}`);
-    console.log(`Jumlah serial TV unik: ${uniqueTvShows.size}`);
+    console.log(`Number of unique films: ${uniqueMovies.size}`);
+    console.log(`Number of unique TV series: ${uniqueTvShows.size}`);
     
     // Buat URL statis, kategori, dan genre
     const staticUrls = [
@@ -186,13 +186,13 @@ export default async function sitemap() {
       ...tvStreamUrls,
     ];
 
-    console.log(`Total URL dalam sitemap: ${allUrls.length}`);
-    console.log('Sitemap berhasil dibuat');
+    console.log(`Total URLs in sitemap: ${allUrls.length}`);
+    console.log('Sitemap created successfully');
 
     return allUrls;
 
   } catch (error) {
-    console.error("Kesalahan saat membuat sitemap:", error);
+    console.error("Error while creating sitemap:", error);
     
     // Return minimal sitemap dengan URL utama jika error
     return [
