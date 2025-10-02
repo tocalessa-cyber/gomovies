@@ -21,7 +21,7 @@ export default function EroticMoviesPage() {
     
     setIsLoading(true);
     try {
-      const newMovies = await getMoviesByKeyword(256466, page);
+      const newMovies = await getMoviesByKeyword(267122, page); 
       
       if (newMovies.length === 0) {
         setHasMore(false);

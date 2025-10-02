@@ -1,12 +1,12 @@
-// app/adult/adult-movies/page.jsx
+// app/adult/erotic-movies/page.jsx
 
 "use client";
 
 import { useState, useEffect } from 'react';
-import { getMoviesByList } from '../../../lib/api';
+import { getMoviesByKeyword } from '../../../lib/api';
 import MovieGrid from '../../../components/MovieGrid';
 
-export default function AdultMoviesPage() {
+export default function EroticMoviesPage() {
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +21,7 @@ export default function AdultMoviesPage() {
     
     setIsLoading(true);
     try {
-      const newMovies = await getMoviesByList("143347", page);
+      const newMovies = await getMoviesByKeyword(190370, page); 
       
       if (newMovies.length === 0) {
         setHasMore(false);
@@ -47,7 +47,7 @@ export default function AdultMoviesPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-white">Adult Movies</h1>
+      <h1 className="text-3xl font-bold mb-6 text-white">Erotic Movies</h1>
       
       <MovieGrid movies={movies} />
       
@@ -81,7 +81,7 @@ export default function AdultMoviesPage() {
 
       {!hasMore && movies.length === 0 && !isLoading && (
         <div className="text-center mt-8 text-gray-400">
-          <p>No adult movies available at the moment</p>
+          <p>No erotic movies available at the moment</p>
         </div>
       )}
     </div>

@@ -7,162 +7,252 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>Gomovies123 - Watch Free Stream Movies and Tv Series </title>
-        <meta name="description" content="Gomovies123 offers Watch Stream Movies and Tv Series Free. Explore our comprehensive database with detailed information, reviews and trailers." />
-        <meta name="keywords" content="Gomovies123, fmovies, 123movies, free movie streaming, watch movies online free, free HD movies, movie database, TV series streaming, free streaming" />
-        <meta property="og:title" content="Gomovies123 - Free HD Streaming Platform" />
-        <meta property="og:description" content="Stream movies, TV shows and web series free in HD quality on Gomovies123. No registration required." />
+        <title>Gomovies123 - Watch Free HD Movies & TV Series Online</title>
+        <meta name="description" content="Gomovies123 - Ultimate free streaming platform with HD movies, TV series, and comprehensive entertainment database. No registration required. Watch anytime, anywhere." />
+        <meta name="keywords" content="free movies online, HD streaming, TV series free, watch movies free, no registration movies, latest films, TV shows online, movie database, entertainment platform" />
+        <meta property="og:title" content="Gomovies123 - Premium Free Streaming Experience" />
+        <meta property="og:description" content="Experience unlimited HD movies and TV series streaming completely free. Advanced features, curated content, and seamless viewing on any device." />
         <meta property="og:image" content="https://live.staticflickr.com/65535/54798535098_a561ac5b6b_b.jpg" />
         <meta property="og:url" content="https://gomovies123.vercel.app/" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="container mx-auto px-4 py-8 text-gray-300">
-        <div className="bg-gray-800 p-8 rounded-xl shadow-lg">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-center mb-4 text-orange-300">
-            Gomovies123 | Watch Free Movies and Tv Series 
-          </h1>
-          <div className="mb-8 flex justify-center">
-            <img
-              src="https://live.staticflickr.com/65535/54798535098_a561ac5b6b_b.jpg"
-              alt="Film reels and movie tickets for Gomovies123 streaming platform"
-              width={1024}
-              height={416}
-              className="rounded-xl shadow-md"
-              loading="lazy"
-            />
-          </div>
-          <p className="text-center text-gray-400 mb-8">
-            Gomovies123 is not just a streaming website; it's a comprehensive portal designed for movie and TV series enthusiasts seeking free HD content.
-          </p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <div className="container mx-auto px-4 py-8">
+          {/* Hero Section */}
+          <div className="bg-gradient-to-r from-slate-800/80 to-purple-900/80 backdrop-blur-lg rounded-2xl p-8 mb-8 border-purple-500/30 shadow-2xl">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                Gomovies123
+              </h1>
+              <p className="text-xl text-gray-300 mb-6 font-light">
+                Your Ultimate Destination for Free HD Entertainment
+              </p>
+              
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                <div className="text-center p-4 bg-slate-800/50 rounded-lg backdrop-blur-sm">
+                  <div className="text-2xl font-bold text-orange-400">10K+</div>
+                  <div className="text-sm text-gray-400">Movies</div>
+                </div>
+                <div className="text-center p-4 bg-slate-800/50 rounded-lg backdrop-blur-sm">
+                  <div className="text-2xl font-bold text-purple-400">5K+</div>
+                  <div className="text-sm text-gray-400">TV Series</div>
+                </div>
+                <div className="text-center p-4 bg-slate-800/50 rounded-lg backdrop-blur-sm">
+                  <div className="text-2xl font-bold text-blue-400">HD</div>
+                  <div className="text-sm text-gray-400">Quality</div>
+                </div>
+                <div className="text-center p-4 bg-slate-800/50 rounded-lg backdrop-blur-sm">
+                  <div className="text-2xl font-bold text-green-400">Free</div>
+                  <div className="text-sm text-gray-400">Forever</div>
+                </div>
+              </div>
+            </div>
 
-          <nav aria-label="Breadcrumb" className="mb-6 text-sm">
-            <ol className="flex flex-wrap">
-              <li className="hover:text-orange-300"><a href="/">Home</a></li>
-              <li className="mx-2">/</li>
-              <li aria-current="page">About Gomovies123</li>
+            {/* Hero Image */}
+            <div className="mb-8 flex justify-center">
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-gradient-to-r from-orange-600 to-purple-600 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+                <img
+                  src="https://live.staticflickr.com/65535/54798535098_a561ac5b6b_b.jpg"
+                  alt="Premium movie streaming experience with film reels and cinematic elements"
+                  width={1024}
+                  height={416}
+                  className="relative rounded-xl shadow-2xl transform group-hover:scale-[1.02] transition duration-500"
+                  loading="eager"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="mb-8">
+            <ol className="flex items-center space-x-2 text-sm">
+              <li>
+                <a href="/" className="text-gray-400 hover:text-orange-400 transition-colors duration-200 flex items-center">
+                  <span className="hover:scale-110 transition-transform">🏠</span>
+                  <span className="ml-2">Home</span>
+                </a>
+              </li>
+              <li className="text-gray-600">❯</li>
+              <li className="text-orange-400 font-semibold">About Gomovies123</li>
             </ol>
           </nav>
 
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-orange-300">
-              What is Gomovies123?
-            </h2>
-            <p className="mb-4 text-justify">
-              Gomovies123 is a revolutionary free streaming platform that provides the most complete, accessible, and always up-to-date movie and TV series database. Established with the mission to provide accurate entertainment information, we offer more than just streaming - we provide detailed titles, posters, cast information, and user reviews. We believe that every film has a story behind it, and our job is to reveal it to you. With a user-friendly interface, smart search, and intuitive navigation, your experience in exploring the cinematic world will be more enjoyable and informative. We don't just focus on Hollywood blockbuster films but also embrace the diversity of cinema from all over the world, including independent films, documentaries, and international content.
-            </p>
-            <p className="mb-4 text-justify">
-              We understand that in this digital era, entertainment options are often scattered across various platforms. Gomovies123 is here as a centralized solution for free streaming. You no longer need to jump from one site to another just to find quality content. From synopses, cast lists, crew, to ratings and reviews, we present everything in one place. Our platform is designed for all audiences, whether you are an experienced film critic, a casual viewer looking for weekend entertainment, or a student researching cinema.
-            </p>
-            <p className="text-justify">
-              Every detail you find on Gomovies123, from release dates to interesting trivia, has been carefully curated. We are committed to maintaining the quality and accuracy of information, making it a reliable source for free movie streaming. We also optimize our site for mobile devices, ensuring you can access our content anytime and anywhere, whether you are in a cafe, traveling, or relaxing at home. Gomovies123 is your loyal companion on every cinematic journey.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-orange-300">
-              Top Features of Gomovies123
-            </h2>
-            <ul className="list-disc list-inside space-y-4 pl-4">
-              <li className="text-justify">
-                <strong>Comprehensive Movie Database:</strong> Explore thousands of free movies from various decades and genres. Find popular, currently airing, upcoming, and top-rated films all in HD quality. <a href="/movies" className="text-orange-300 hover:underline">Browse our movie collection</a>.
-              </li>
-              <li className="text-justify">
-                <strong>In-depth TV Series Information:</strong> We don't forget about TV series lovers. Find popular, currently airing, on-air, and top-rated series available for free streaming. <a href="/tv-series" className="text-orange-300 hover:underline">Discover TV series</a>.
-              </li>
-              <li className="text-justify">
-                <strong>Smart and Efficient Search:</strong> Search for your favorite movies, TV series, or even actors quickly and accurately. Our search system is designed to understand your intent and provide the most relevant results for free content.
-              </li>
-              <li className="text-justify">
-                <strong>User Reviews and Ratings:</strong> Get real perspectives from other viewers through the reviews and ratings we display. This helps you make better decisions before watching free movies online.
-              </li>
-              <li className="text-justify">
-                <strong>Trailers and Videos:</strong> Watch trailers and movie clips directly on the detail page, giving you a preview of the content before you decide to stream it for free.
-              </li>
-              <li className="text-justify">
-                <strong>Free HD Streaming:</strong> Enjoy high-definition movies and TV shows without subscription fees or hidden costs, making premium entertainment accessible to everyone.
-              </li>
-            </ul>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-orange-300">
-              Our Mission and Vision
-            </h2>
-            <p className="mb-4 text-justify">
-              Our mission is to be the most trusted and easily accessible free streaming source of film and TV series information globally. We want to be a bridge between cinematic art and the audience, facilitating the discovery and appreciation of various forms of visual entertainment. Our vision is to create a digital ecosystem where premium entertainment is not only available but also accessible to everyone without financial barriers. We aspire to build a solid and passionate community, where the exchange of ideas and film recommendations is common and enjoyable.
-            </p>
-            <p className="text-justify">
-              We are committed to continuously innovating and adding new features that are relevant to user needs. We listen to feedback from our community and actively implement suggestions to improve this free streaming platform. This is a project that continues to evolve, and every update, whether small or large, is dedicated to you, our valuable users. We believe that with collaboration and the same spirit, we can make Gomovies123 the number one free site for all things related to movies and TV series.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-orange-300">
-              How Gomovies123 is Different
-            </h2>
-            <p className="mb-4 text-justify">
-              Amidst the sea of streaming platforms, Gomovies123 stands out for several reasons. First, we prioritize the user experience. Our interface is designed to be minimalist and clean, free from annoying pop-up ads and unnecessary elements. We want you to focus on what matters most: movies and TV series.
-            </p>
-            <p className="mb-4 text-justify">
-              Second, we are a reliable source of information because we get data directly from <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" className="text-orange-300 hover:underline">The Movie Database (TMDb)</a>, one of the largest and most prominent film databases in the world. This ensures that all the information you see, from the cast list to the release date, is the most accurate and up-to-date. TMDb is a global community that constantly verifies and updates data, and we are proud to be able to present this high-quality data to you.
-            </p>
-            <p className="mb-4 text-justify">
-              Third, we not only present movies but also TV series. This makes Gomovies123 a one-stop-shop for all your visual entertainment needs. You don't have to switch to other platforms to get information about your favorite TV shows. Everything is here, under one roof.
-            </p>
-            <p className="mb-4 text-justify">
-              Fourth, and most importantly, Gomovies123 provides completely free access to HD content without requiring registration or subscription. We believe that quality entertainment should be accessible to everyone regardless of their financial situation.
-            </p>
-            <p className="text-justify">
-              Lastly, we are a community-focused platform. We encourage users to interact, share reviews, and recommend films to their friends. We believe that the viewing experience is richer when shared with others. We are a place where you not only find movies but also find friends with similar interests.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-orange-300">
-              SEO and Optimization for the Best Streaming Experience
-            </h2>
-            <p className="mb-4 text-justify">
-              We take SEO (Search Engine Optimization) seriously to ensure Gomovies123 is easily found by anyone looking for free movie and TV series streaming on the internet. This content is designed to cover relevant keywords such as "watch movies online free," "free movie streaming," "123 movies," "free HD movies," "most complete movie database," "latest movie reviews," "movie genres," and "free streaming information." The goal is that when someone types these keywords into Google or other search engines, Gomovies123 appears in the top results.
-            </p>
-            <p className="mb-4 text-justify">
-              We also optimize our website speed. With lightweight and efficient code, our pages load quickly, providing a smooth streaming experience. Site speed is an important factor in SEO and user satisfaction, and we are committed to maintaining optimal performance for buffer-free viewing.
-            </p>
-            <p className="mb-4 text-justify">
-              In addition, we ensure that all our content is accessible from various devices, whether it's a desktop, tablet, or mobile phone. With a responsive design, Gomovies123 will look and function perfectly on any screen. This is important because most internet users today access content via mobile devices.
-            </p>
-            <p className="text-justify">
-              We also use a clean and descriptive URL structure, which is not only readable by humans but also friendly to search engines. Each movie and TV series page has a URL that reflects its title, helping search engines understand the page content. We regularly monitor our SEO performance and make necessary adjustments to ensure our site remains competitive in the digital market and easily discoverable by users seeking free streaming options.
-            </p>
-          </section>
-
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-orange-300">
-              Join the Gomovies123 Community
-            </h2>
-            <p className="mb-4 text-justify">
-              Gomovies123 is a project born from a love for movies and TV series and a belief that entertainment should be free and accessible to all. We invite you to explore our site, discover new titles, and share your experiences. This site is a testament to our dedication to providing a platform that is not only informative but also inspiring and entertaining. We will continue to work hard to bring the best content and the most advanced features to you without ever charging a fee.
-            </p>
-            <p className="text-justify">
-              So, what are you waiting for? Start your cinematic adventure now! Explore our vast movie collection, find your next favorite TV series, and enjoy an unrivaled free streaming experience. We are confident you will find something new to love on Gomovies123. Thank you for choosing us as your free movie streaming source. We are proud to serve you.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-4">
-              <a href="/Trending" className="bg-orange-700 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">
-                Browse Movies
-              </a>
-              <a href="/Trending" className="bg-blue-700 hover:bg-orange-700 text-white font-bold py-2 px-6 rounded">
-                Explore TV Series
-              </a>
+          {/* Main Content */}
+          <div className="grid lg:grid-cols-4 gap-8">
+            {/* Sidebar */}
+            <div className="lg:col-span-1 space-y-6">
+              <div className="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 border border-slate-700">
+                <h3 className="text-lg font-bold text-white mb-4">Quick Links</h3>
+                <div className="space-y-3">
+                  {[
+                    { href: "/movies", label: "🎬 Browse Movies", color: "orange" },
+                    { href: "/tv-series", label: "📺 TV Series", color: "purple" },
+                    { href: "/trending", label: "🔥 Trending", color: "red" },
+                    { href: "/genres", label: "🎭 Genres", color: "blue" }
+                  ].map((link, index) => (
+                    <a
+                      key={index}
+                      href={link.href}
+                      className={`block p-3 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition-all duration-200 transform hover:scale-105 hover:border-l-4 hover:border-${link.color}-400`}
+                    >
+                      <span className="text-white font-medium">{link.label}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
-          </section>
 
-          <div className="border-t border-gray-700 pt-6 mt-6">
-            <h3 className="text-xl font-bold mb-4 text-orange-300">Related Pages</h3>
-            <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <li><a href="/privacy-policy" className="text-orange-300 hover:underline">Privacy Policy</a></li>
-              <li><a href="/terms-of-service" className="text-orange-300 hover:underline">Terms of Service</a></li>
-              <li><a href="/contact" className="text-orange-300 hover:underline">Contact Us</a></li>
-            </ul>
+            {/* Content */}
+            <div className="lg:col-span-3 space-y-8">
+              {/* What is Gomovies123 */}
+              <section className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 border border-slate-700 hover:border-orange-500/30 transition-all duration-300">
+                <div className="flex items-center mb-6">
+                  <div className="w-2 h-8 bg-orange-500 rounded-full mr-4"></div>
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
+                    What is Gomovies123?
+                  </h2>
+                </div>
+                <div className="space-y-4 text-gray-300 leading-relaxed">
+                  <p className="text-lg">
+                    Gomovies123 is a revolutionary free streaming platform that provides the most complete, accessible, and always up-to-date movie and TV series database. Established with the mission to provide accurate entertainment information, we offer more than just streaming - we provide detailed titles, posters, cast information, and user reviews.
+                  </p>
+                  <div className="grid md:grid-cols-2 gap-4 mt-6">
+                    <div className="flex items-start space-x-3 p-4 bg-slate-700/30 rounded-lg">
+                      <span className="text-2xl">🎯</span>
+                      <div>
+                        <h4 className="font-semibold text-white">Curated Content</h4>
+                        <p className="text-sm text-gray-400">Handpicked selections for every taste</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3 p-4 bg-slate-700/30 rounded-lg">
+                      <span className="text-2xl">⚡</span>
+                      <div>
+                        <h4 className="font-semibold text-white">Instant Access</h4>
+                        <p className="text-sm text-gray-400">No registration, start watching immediately</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Features */}
+              <section className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 border border-slate-700 hover:border-purple-500/30 transition-all duration-300">
+                <div className="flex items-center mb-6">
+                  <div className="w-2 h-8 bg-purple-500 rounded-full mr-4"></div>
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    Premium Features
+                  </h2>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {[
+                    {
+                      icon: "🎭",
+                      title: "Comprehensive Database",
+                      description: "Thousands of movies and TV series across all genres",
+                      link: "/movies"
+                    },
+                    {
+                      icon: "🔍",
+                      title: "Smart Search",
+                      description: "Advanced search with filters and recommendations",
+                      link: "/search"
+                    },
+                    {
+                      icon: "💎",
+                      title: "HD Streaming",
+                      description: "Crystal clear HD quality without buffering",
+                      link: "/trending"
+                    },
+                    {
+                      icon: "🌟",
+                      title: "User Reviews",
+                      description: "Real ratings and reviews from our community",
+                      link: "/community"
+                    },
+                    {
+                      icon: "🎬",
+                      title: "Trailers & Clips",
+                      description: "Watch previews before streaming",
+                      link: "/trailers"
+                    },
+                    {
+                      icon: "📱",
+                      title: "Multi-Device",
+                      description: "Seamless experience on all devices",
+                      link: "/mobile"
+                    }
+                  ].map((feature, index) => (
+                    <div key={index} className="group p-6 bg-slate-700/30 rounded-xl hover:bg-slate-700/50 transition-all duration-300 transform hover:scale-105">
+                      <div className="text-3xl mb-3 transform group-hover:scale-110 transition-transform duration-300">
+                        {feature.icon}
+                      </div>
+                      <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                      <p className="text-gray-400 mb-3">{feature.description}</p>
+                      <a href={feature.link} className="text-orange-400 hover:text-orange-300 font-medium text-sm inline-flex items-center group/link">
+                        Explore
+                        <span className="ml-1 transform group-hover/link:translate-x-1 transition-transform">→</span>
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Mission & Vision */}
+              <section className="bg-gradient-to-r from-slate-800/50 to-blue-900/50 backdrop-blur-lg rounded-2xl p-8 border border-blue-500/30">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-4">
+                    Our Mission & Vision
+                  </h2>
+                  <p className="text-gray-300 text-lg max-w-3xl mx-auto">
+                    Creating a world where premium entertainment is accessible to everyone, without barriers
+                  </p>
+                </div>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="text-center p-6">
+                    <div className="text-4xl mb-4">🎯</div>
+                    <h3 className="text-xl font-bold text-white mb-3">Mission</h3>
+                    <p className="text-gray-400">
+                      To be the most trusted and easily accessible free streaming source of film and TV series information globally.
+                    </p>
+                  </div>
+                  <div className="text-center p-6">
+                    <div className="text-4xl mb-4">👁️</div>
+                    <h3 className="text-xl font-bold text-white mb-3">Vision</h3>
+                    <p className="text-gray-400">
+                      Building a digital ecosystem where quality entertainment is available to everyone without financial barriers.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* CTA Section */}
+              <section className="text-center bg-gradient-to-r from-orange-500/20 to-purple-500/20 backdrop-blur-lg rounded-2xl p-12 border border-orange-500/30">
+                <h2 className="text-4xl font-black text-white mb-4">
+                  Ready to Start Streaming?
+                </h2>
+                <p className="text-gray-300 text-xl mb-8 max-w-2xl mx-auto">
+                  Join millions of users enjoying free HD movies and TV series
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <a 
+                    href="/trending" 
+                    className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    🎬 Browse Movies
+                  </a>
+                  <a 
+                    href="/tv-series" 
+                    className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    📺 Explore TV Series
+                  </a>
+                </div>
+              </section>
+            </div>
           </div>
         </div>
       </div>
@@ -180,7 +270,12 @@ export default function About() {
               "target": "https://gomovies123.vercel.app/search?q={search_term_string}",
               "query-input": "required name=search_term_string"
             },
-            "description": "Watch Stream Movies and Tv Series Free without registration"
+            "description": "Free HD movie and TV series streaming platform with comprehensive database and advanced features",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Gomovies123",
+              "url": "https://gomovies123.vercel.app/"
+            }
           })
         }}
       />
