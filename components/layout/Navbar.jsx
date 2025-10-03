@@ -77,10 +77,10 @@ const DropdownMenu = ({ title, categories, genres, genrePathPrefix }) => {
                 onMouseLeave={handleGenresMouseLeave}
               >
                 <button className={subDropdownTriggerClass}>
-                  Genres <FaChevronDown className={`ml-1 transition-transform duration-200 ${isGenresOpen ? 'rotate-180' : ''}`} />
+                  Genres <FaChevronDown className={`ml1 transition-transform duration-200 ${isGenresOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {isGenresOpen && (
-                  <div className="absolute top-0 left-full mt-0 w-48 bg-slate-800 dark:bg-gray-800 rounded-md shadow-lg z-30 ml-1">
+                  <div className="absolute top-0 left-full mt-0 w-48 bg-slate-800 dark:bg-gray-800 rounded-md shadow-lg z-30 ml1">
                     <div className="py-1 max-h-60 overflow-y-auto">
                       {genres.map((genre) => (
                         <Link
@@ -142,7 +142,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-slate-900 dark:bg-gray-900 p-4 sticky top-0 z-50 shadow-lg transition-colors duration-300">
+    <nav className="bg-gradient-to-r from-slate-800/80 to-purple-900/80 backdrop-blur-lg rounded-2xl p-4 mb-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-4">
           {/* Logo mengarah ke Trendingpage (/) - halaman about */}
