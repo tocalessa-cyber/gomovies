@@ -21,7 +21,7 @@ export default function About() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <div className="container mx-auto px-4 py-8">
           {/* Hero Section */}
-          <div className="bg-gradient-to-r from-slate-800/80 to-purple-900/80 backdrop-blur-lg rounded-2xl p-8 mb-8 border-purple-500/30 shadow-2xl">
+          <div className="bg-gradient-to-r from-slate-800/80 to-purple-900/80 backdrop-blur-lg rounded-2xl p-8 mb-8">
             <div className="text-center mb-8">
               <h1 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent">
                 Gomovies123
@@ -89,10 +89,10 @@ export default function About() {
                 <h3 className="text-lg font-bold text-white mb-4">Quick Links</h3>
                 <div className="space-y-3">
                   {[
-                    { href: "/movies", label: "🎬 Browse Movies", color: "orange" },
-                    { href: "/tv-series", label: "📺 TV Series", color: "purple" },
-                    { href: "/trending", label: "🔥 Trending", color: "red" },
-                    { href: "/genres", label: "🎭 Genres", color: "blue" }
+                    { href: "/movie/genre/science-fiction", label: "🎬 Browse Movies", color: "orange" },
+                    { href: "/tv-show/genre/action-&-adventure", label: "📺 TV Series", color: "purple" },
+                    { href: "/Trending", label: "🔥 Trending", color: "red" },
+                    { href: "/movie/genre/animation", label: "🎭 Genres", color: "blue" }
                   ].map((link, index) => (
                     <a
                       key={index}
@@ -153,37 +153,37 @@ export default function About() {
                       icon: "🎭",
                       title: "Comprehensive Database",
                       description: "Thousands of movies and TV series across all genres",
-                      link: "/movies"
+                      link: "/adult/erotic-movies"
                     },
                     {
                       icon: "🔍",
                       title: "Smart Search",
                       description: "Advanced search with filters and recommendations",
-                      link: "/search"
+                      link: "/search?query=sex"
                     },
                     {
                       icon: "💎",
                       title: "HD Streaming",
                       description: "Crystal clear HD quality without buffering",
-                      link: "/trending"
+                      link: "/Trending"
                     },
                     {
                       icon: "🌟",
                       title: "User Reviews",
                       description: "Real ratings and reviews from our community",
-                      link: "/community"
+                      link: "/movie/the-shawshank-redemption-1994"
                     },
                     {
                       icon: "🎬",
                       title: "Trailers & Clips",
                       description: "Watch previews before streaming",
-                      link: "/trailers"
+                      link: "/movie/the-godfather-1972"
                     },
                     {
                       icon: "📱",
                       title: "Multi-Device",
                       description: "Seamless experience on all devices",
-                      link: "/mobile"
+                      link: "/"
                     }
                   ].map((feature, index) => (
                     <div key={index} className="group p-6 bg-slate-700/30 rounded-xl hover:bg-slate-700/50 transition-all duration-300 transform hover:scale-105">
@@ -239,13 +239,13 @@ export default function About() {
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <a 
-                    href="/trending" 
+                    href="/movie/top_rated" 
                     className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     🎬 Browse Movies
                   </a>
                   <a 
-                    href="/tv-series" 
+                    href="/tv-show/top_rated" 
                     className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     📺 Explore TV Series
