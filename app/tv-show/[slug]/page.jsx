@@ -54,12 +54,12 @@ export async function generateMetadata({ params }) {
 
   if (genreSlugMap.has(processedSlug)) {
     const genre = genreSlugMap.get(processedSlug);
-    return { title: `Layar Kaca - ${genre.name} TV Series` };
+    return { title: `Gomovies123 - ${genre.name} TV Series` };
   }
 
   if (CATEGORIES.includes(slug)) {
     const title = slug.replace(/_/g, ' ').toUpperCase();
-    return { title: `Layar Kaca - ${title} TV Series` };
+    return { title: `Gomovies123 - ${title} TV Series` };
   }
 
   // Logika untuk mengambil data TV show untuk metadata detail
@@ -98,7 +98,7 @@ export async function generateMetadata({ params }) {
   const socialImageAlt = `${tvShowData.name} poster`;
 
   return {
-    title: `Layar Kaca - ${tvShowData.name}`,
+    title: `Gomovies123 - ${tvShowData.name}`,
     description: tvShowData.overview,
     openGraph: {
       title: tvShowData.name,

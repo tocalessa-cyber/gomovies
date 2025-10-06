@@ -4,19 +4,20 @@ import Footer from '../components/layout/Footer';
 import AdsterraLayoutWrapper from '../components/AdsterraLayoutWrapper';
 
 export const metadata = {
-  title: 'Gomovies123 | Watch Free Stream Movies and TV Series HD ',
-  description: 'Gomovies123 is your one-stop destination for free movies, TV shows, and web series. Download thousands of titles in HD quality, with unlimited access to the latest blockbusters and trending series. Start your free entertainment journey today! ',
+  title: 'Gomovies123 | Watch Movies, Stream TV Series Free - Complete Movie Database',
+  description: 'Gomovies123 is your ultimate movie database with 10,000+ movies, 5,000+ TV series, actor profiles, genre pages, and yearly archives. Discover, stream, and enjoy cinematic excellence with our comprehensive entertainment platform.',
+  keywords: 'movies, tv series, streaming, movie database, actors, genres, rankings, movie archives',
   openGraph: {
-    title: 'Gomovies123 | Watch Free Stream Movies and TV Series HD',
-    description: 'Gomovies123 is your one-stop destination for free movies, TV shows, and web series. Download thousands of titles in HD quality, with unlimited access to the latest blockbusters and trending series. Start your free entertainment journey today! ',
-    url: 'https://gomovies123.vercel.app',
+    title: 'Gomovies123 | Complete Movie & TV Series Database',
+    description: 'Your ultimate destination for movies, TV series, actor profiles, and streaming information. Explore genres, yearly archives, and top rankings.',
+    url: 'https://gomovies123.vercel.app/',
     siteName: 'Gomovies123',
     images: [
       {
-        url: 'https://live.staticflickr.com/65535/54798535098_a561ac5b6b_b.jpg',
+        url: 'https://live.staticflickr.com/65535/54796879356_0cf11547b4_b.jpg',
         width: 1200,
         height: 630,
-        alt: 'Gomovies123 - Watch Free HD Movies, TV Shows and Web Series',
+        alt: 'Gomovies123 - Complete Movie Database',
       },
     ],
     locale: 'en_US',
@@ -24,11 +25,11 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@WatchStream123',
-    creator: '@WatchStream123',
-    title: 'Gomovies123 | Watch Free Stream Movies and TV Series HD',
-    description: 'Gomovies123 is your one-stop destination for free movies, TV shows, and web series. Download thousands of titles in HD quality, with unlimited access to the latest blockbusters and trending series. Start your free entertainment journey today!',
-    images: ['https://live.staticflickr.com/65535/54798535098_a561ac5b6b_b.jpg'],
+    site: '@Gomovies123',
+    creator: '@Gomovies123',
+    title: 'Gomovies123 | Complete Movie & TV Series Database',
+    description: 'Explore 10,000+ movies, 5,000+ TV series, actor profiles, and streaming guides on Gomovies123.',
+    images: ['https://live.staticflickr.com/65535/54796879356_0cf11547b4_b.jpg'],
   },
   // Tambahkan tag meta eksplisit untuk Facebook
   other: {
@@ -42,6 +43,23 @@ export default function RootLayout({ children }) {
 	  <head>
         {/* Tag verifikasi Google Search Console */}
         <meta name="google-site-verification" content="p3G8gbPM5atmqVkYXyzaATfRg6O6WsSLKI0GOk4mnfg" />
+        {/* Schema.org markup untuk Movie Database */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "MovieDatabase",
+              "name": "Gomovies123",
+              "description": "Complete movie and TV series database with streaming information",
+              "url": "https://gomovies123.vercel.app/",
+              "logo": "https://live.staticflickr.com/65535/54796879356_0cf11547b4_b.jpg",
+              "sameAs": [
+                "https://gomovies123.vercel.app/"
+              ]
+            })
+          }}
+        />
       </head>
       <body>
         <AdsterraLayoutWrapper>

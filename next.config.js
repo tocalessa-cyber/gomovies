@@ -1,3 +1,4 @@
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -5,15 +6,20 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'image.tmdb.org',
-        port: '',
         pathname: '/t/p/**',
       },
       {
         protocol: 'https',
         hostname: 'placehold.co',
+        pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'via.placehold.co',
+        pathname: '/**',
+      }
     ],
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

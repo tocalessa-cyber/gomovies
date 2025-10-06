@@ -41,14 +41,14 @@ export async function generateMetadata({ params }) {
   const title = genre?.name || 'Unknown';
   
   const pageUrl = `https://gomovies123.vercel.app/tv-show/genre/${genreName}`;
-  const imageUrl = 'https://live.staticflickr.com/65535/54798535098_a561ac5b6b_b.jpg';
+  const imageUrl = 'https://live.staticflickr.com/65535/54796879356_0cf11547b4_b.jpg';
 
   return {
     title: `Gomovies123 - ${title} TV Series`,
-    description: `Find and watch the best ${title} TV series for free on Layar Kaca.`,
+    description: `Find and watch the best ${title} TV series for free on Gomovies123.`,
     openGraph: {
       title: `Gomovies123 - ${title} TV Series`,
-      description: `Find and watch the best ${title} TV series for free on Layar Kaca.`,
+      description: `Find and watch the best ${title} TV series for free on Gomovies123.`,
       url: pageUrl,
       siteName: 'Gomovies123',
       images: [
@@ -66,8 +66,8 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       site: '@WatchStream123',
       creator: '@WatchStream123',
-      title: `Layar Kaca - ${title} TV Series`,
-      description: `Find and watch the best ${title} TV series for free on Layar Kaca.`,
+      title: `Gomovies123 - ${title} TV Series`,
+      description: `Find and watch the best ${title} TV series for free on Gomovies123.`,
       images: [imageUrl],
     },
     other: {

@@ -39,8 +39,8 @@ export async function generateMetadata({ params }) {
   if (CATEGORIES.includes(slug)) {
     const title = slug.replace(/_/g, ' ').toUpperCase();
     return {
-      title: `Layar Kaca - ${title} Movies`,
-      description: `Explore the ${title} movies collection on Layar Kaca.`,
+      title: `Gomovies123 - ${title} Movies`,
+      description: `Explore the ${title} movies collection on Gomovies123.`,
     };
   }
 
@@ -51,8 +51,8 @@ export async function generateMetadata({ params }) {
     const genres = await getMovieGenres();
     const genreName = genres.find(g => g.id == genreId)?.name || 'Unknown';
     return {
-      title: `Layar Kaca - ${genreName} Movies`,
-      description: `Discover ${genreName} movies on Layar Kaca.`,
+      title: `Gomovies123 - ${genreName} Movies`,
+      description: `Discover ${genreName} movies on Gomovies123.`,
     };
   }
 
@@ -84,7 +84,7 @@ export async function generateMetadata({ params }) {
   if (!movieData) {
     return {
       title: 'Gomovies123',
-      description: 'Find your favorite movies to stream.',
+      description: 'Watch Movie Stream Movies and Tv Series Free.',
     };
   }
 
@@ -419,7 +419,7 @@ export default async function MoviePage({ params }) {
 		{/* Bottom Stream Button */}
         <div className="mt-12 text-center">
              <a href={`/movie/${slug}/stream`}>
-              <button className="bg-blue-700 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
+              <button className="bg-blue-700 hover:bg-green-800 text-white font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-105 shadow-lg">
                 🎬 Stream Now
               </button>
             </a>
