@@ -12,7 +12,7 @@ export default function AdsterraLayoutWrapper({ children }) {
         
         // Memuat skrip iklan Native Banner
         const nativeBannerScript = document.createElement('script');
-        nativeBannerScript.src = "//eminencehillsidenutrition.com/75a330c0010036df621f28cf1fa626d0/invoke.js";
+        nativeBannerScript.src = "//fundingfashioned.com/75a330c0010036df621f28cf1fa626d0/invoke.js";
         nativeBannerScript.async = true;
         nativeBannerScript.setAttribute('data-cfasync', 'false');
         nativeBannerScript.id = 'adsterra-native-banner';
@@ -21,7 +21,7 @@ export default function AdsterraLayoutWrapper({ children }) {
         // Memuat skrip iklan Popunder
         const popunderScript = document.createElement('script');
         popunderScript.type = 'text/javascript';
-        popunderScript.src = "//eminencehillsidenutrition.com/8a/d6/af/8ad6af416314aafc6add60c81ac98829.js";
+        popunderScript.src = "//fundingfashioned.com/8a/d6/af/8ad6af416314aafc6add60c81ac98829.js";
         popunderScript.async = true;
         popunderScript.id = 'adsterra-popunder';
         document.body.appendChild(popunderScript);
@@ -29,7 +29,7 @@ export default function AdsterraLayoutWrapper({ children }) {
         // Memuat skrip iklan Social Bar
         const socialBarScript = document.createElement('script');
         socialBarScript.type = 'text/javascript';
-        socialBarScript.src = "//eminencehillsidenutrition.com/af/8a/3e/af8a3e31911498739f710f2973e1c485.js";
+        socialBarScript.src = "//fundingfashioned.com/af/8a/3e/af8a3e31911498739f710f2973e1c485.js";
         socialBarScript.async = true;
         socialBarScript.id = 'adsterra-social-bar';
         document.body.appendChild(socialBarScript);

@@ -1,5 +1,5 @@
 // app/sitemap.js - VERSI DINAMIS DENGAN ENV VARIABLES - FIXED
-const BASE_URL = 'https://soap2day-hd.vercel.app/';
+const BASE_URL = 'https://gomovies123.vercel.app/';
 
 export default async function sitemap() {
   console.log('🎬 Generating dynamic sitemap for Soap2day...');

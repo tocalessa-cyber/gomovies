@@ -25,8 +25,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@Gomovies123',
-    creator: '@Gomovies123',
+    site: '@WatchStream123',
+    creator: '@WatchStream123',
     title: 'Gomovies123 | Complete Movie & TV Series Database',
     description: 'Explore 10,000+ movies, 5,000+ TV series, actor profiles, and streaming guides on Gomovies123.',
     images: ['https://live.staticflickr.com/65535/54796879356_0cf11547b4_b.jpg'],
