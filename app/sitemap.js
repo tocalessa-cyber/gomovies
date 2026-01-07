@@ -1,5 +1,5 @@
-// app/sitemap.js - VERSI DIPERBAIKI
-const BASE_URL = 'https://gomovies123.vercel.app'; // HAPUS SLASH DI AKHIR!
+// app/sitemap.js - VERSI DIPERBAIKI DAN LENGKAP
+const BASE_URL = 'https://gomovies123.vercel.app';
 
 export default async function sitemap() {
   console.log('🎬 Generating dynamic sitemap for Gomovies123...');
@@ -74,14 +74,14 @@ async function getDynamicUrls() {
 
     const dynamicUrls = [
       // 🎬 Movie Detail Pages
-      ...movies.map(item => generateContentUrls(item, 'movie')),
+      ...movies.map(item => generateContentUrls(item, 'movie')).flat(),
       
       // 📺 TV Show Detail Pages  
-      ...tvShows.map(item => generateContentUrls(item, 'tv-show')),
+      ...tvShows.map(item => generateContentUrls(item, 'tv-show')).flat(),
       
       // 🎭 Genre Pages
       ...generateGenreUrls(genres)
-    ].flat();
+    ];
 
     console.log(`🎯 Generated: ${movies.length} movies, ${tvShows.length} TV shows, ${genres.movie.length + genres.tv.length} genres`);
     
@@ -117,12 +117,11 @@ function generateArchiveUrls() {
   return [...yearUrls, ...decadeUrls];
 }
 
-// ✅ DIPERBAIKI: Gunakan headers seperti di api.js
 async function fetchPopularContent(type) {
   try {
     const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
     const TMDB_ACCESS_TOKEN = process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
-    const TMDB_API_URL = 'https://api.themoviedb.org/3'; // Hardcode, lebih aman
+    const TMDB_API_URL = 'https://api.themoviedb.org/3';
     
     if (!TMDB_API_KEY) {
       console.warn('⚠️ TMDB API key not found, using sample data');
@@ -131,13 +130,11 @@ async function fetchPopularContent(type) {
     
     const endpoint = type === 'movie' ? 'movie/popular' : 'tv/popular';
     
-    // ✅ DIPERBAIKI: Gunakan headers dengan authorization
     const headers = {
       'Authorization': `Bearer ${TMDB_ACCESS_TOKEN}`,
       'Content-Type': 'application/json'
     };
     
-    // ✅ DIPERBAIKI: Gunakan API key di query param DAN headers
     const url = `${TMDB_API_URL}/${endpoint}?api_key=${TMDB_API_KEY}&language=en-US&page=1`;
     
     const response = await fetch(url, {
@@ -158,7 +155,6 @@ async function fetchPopularContent(type) {
   }
 }
 
-// ✅ DIPERBAIKI: Fetch genres dengan headers
 async function fetchGenres() {
   try {
     const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
@@ -205,25 +201,29 @@ async function fetchGenres() {
 }
 
 function generateContentUrls(item, type) {
-  const slug = createSlug(type === 'movie' ? item.title : item.name, 
-                         type === 'movie' ? item.release_date : item.first_air_date);
+  const slug = createSlug(
+    type === 'movie' ? item.title : item.name, 
+    type === 'movie' ? item.release_date : item.first_air_date
+  );
   
-  const urls = [
-    {
+  const urls = [];
+  
+  if (slug) {
+    urls.push({
       url: `${BASE_URL}/${type}/${slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8
-    }
-  ];
-  
-  if (item.id) {
-    urls.push({
-      url: `${BASE_URL}/${type}/${slug}/stream`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7
     });
+    
+    if (item.id) {
+      urls.push({
+        url: `${BASE_URL}/${type}/${slug}/stream`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.7
+      });
+    }
   }
   
   return urls;
@@ -233,32 +233,45 @@ function generateGenreUrls(genres) {
   const now = new Date();
   const urls = [];
   
-  genres.movie.forEach(genre => {
-    const slug = createSlug(genre.name);
-    urls.push({
-      url: `${BASE_URL}/movie/genre/${slug}`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.6
+  // Movie genres
+  if (genres.movie && Array.isArray(genres.movie)) {
+    genres.movie.forEach(genre => {
+      if (genre && genre.name) {
+        const slug = createSlug(genre.name);
+        if (slug) {
+          urls.push({
+            url: `${BASE_URL}/movie/genre/${slug}`,
+            lastModified: now,
+            changeFrequency: 'weekly',
+            priority: 0.6
+          });
+        }
+      }
     });
-  });
+  }
   
-  genres.tv.forEach(genre => {
-    const slug = createSlug(genre.name);
-    urls.push({
-      url: `${BASE_URL}/tv-show/genre/${slug}`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.6
+  // TV genres
+  if (genres.tv && Array.isArray(genres.tv)) {
+    genres.tv.forEach(genre => {
+      if (genre && genre.name) {
+        const slug = createSlug(genre.name);
+        if (slug) {
+          urls.push({
+            url: `${BASE_URL}/tv-show/genre/${slug}`,
+            lastModified: now,
+            changeFrequency: 'weekly',
+            priority: 0.6
+          });
+        }
+      }
     });
-  });
+  }
   
   return urls;
 }
 
-// ✅ DIPERBAIKI: Slug function yang lebih baik
 function createSlug(name, dateString = '') {
-  if (!name) return '';
+  if (!name || typeof name !== 'string') return '';
   
   const baseSlug = name
     .toLowerCase()
@@ -277,7 +290,7 @@ function createSlug(name, dateString = '') {
   return baseSlug;
 }
 
-// 🔄 FALLBACK DATA (tidak perlu diubah)
+// 🔄 FALLBACK DATA
 function generateSampleContent(type) {
   const sampleData = type === 'movie' ? sampleMovies : sampleTvShows;
   return sampleData.slice(0, 20);
@@ -287,19 +300,59 @@ function getSampleGenres() {
   return {
     movie: [
       { id: 28, name: 'Action' }, { id: 12, name: 'Adventure' },
-      // ... keep existing genres
+      { id: 16, name: 'Animation' }, { id: 35, name: 'Comedy' },
+      { id: 80, name: 'Crime' }, { id: 99, name: 'Documentary' },
+      { id: 18, name: 'Drama' }, { id: 10751, name: 'Family' },
+      { id: 14, name: 'Fantasy' }, { id: 36, name: 'History' },
+      { id: 27, name: 'Horror' }, { id: 10402, name: 'Music' },
+      { id: 9648, name: 'Mystery' }, { id: 10749, name: 'Romance' },
+      { id: 878, name: 'Science Fiction' }, { id: 10770, name: 'TV Movie' },
+      { id: 53, name: 'Thriller' }, { id: 10752, name: 'War' },
+      { id: 37, name: 'Western' }
     ],
     tv: [
       { id: 10759, name: 'Action & Adventure' },
-      // ... keep existing genres
+      { id: 16, name: 'Animation' },
+      { id: 35, name: 'Comedy' },
+      { id: 80, name: 'Crime' },
+      { id: 99, name: 'Documentary' },
+      { id: 18, name: 'Drama' },
+      { id: 10751, name: 'Family' },
+      { id: 10762, name: 'Kids' },
+      { id: 9648, name: 'Mystery' },
+      { id: 10763, name: 'News' },
+      { id: 10764, name: 'Reality' },
+      { id: 10765, name: 'Sci-Fi & Fantasy' },
+      { id: 10766, name: 'Soap' },
+      { id: 10767, name: 'Talk' },
+      { id: 10768, name: 'War & Politics' },
+      { id: 37, name: 'Western' }
     ]
   };
 }
 
 const sampleMovies = [
-  // ... keep existing sample movies
+  { id: 1, title: 'The Matrix', release_date: '1999-03-31' },
+  { id: 2, title: 'Inception', release_date: '2010-07-16' },
+  { id: 3, title: 'Parasite', release_date: '2019-05-30' },
+  { id: 4, title: 'The Dark Knight', release_date: '2008-07-18' },
+  { id: 5, title: 'Avengers: Endgame', release_date: '2019-04-26' },
+  { id: 6, title: 'Pulp Fiction', release_date: '1994-10-14' },
+  { id: 7, title: 'Forrest Gump', release_date: '1994-07-06' },
+  { id: 8, title: 'The Shawshank Redemption', release_date: '1994-09-23' },
+  { id: 9, title: 'Spirited Away', release_date: '2001-07-20' },
+  { id: 10, title: 'Interstellar', release_date: '2014-11-07' }
 ];
 
 const sampleTvShows = [
-  // ... keep existing sample TV shows
+  { id: 1, name: 'Breaking Bad', first_air_date: '2008-01-20' },
+  { id: 2, name: 'Game of Thrones', first_air_date: '2011-04-17' },
+  { id: 3, name: 'Stranger Things', first_air_date: '2016-07-15' },
+  { id: 4, name: 'The Crown', first_air_date: '2016-11-04' },
+  { id: 5, name: 'Friends', first_air_date: '1994-09-22' },
+  { id: 6, name: 'The Office', first_air_date: '2005-03-24' },
+  { id: 7, name: 'Sherlock', first_air_date: '2010-07-25' },
+  { id: 8, name: 'The Mandalorian', first_air_date: '2019-11-12' },
+  { id: 9, name: 'Chernobyl', first_air_date: '2019-05-06' },
+  { id: 10, name: 'Money Heist', first_air_date: '2017-05-02' }
 ];
