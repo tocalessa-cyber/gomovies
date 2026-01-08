@@ -3,8 +3,6 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import AdsterraLayoutWrapper from '../components/AdsterraLayoutWrapper';
 
-export const runtime = 'edge';
-
 export const metadata = {
   title: 'Gomovies123 | Watch Movies, Stream TV Series Free - Complete Movie Database',
   description: 'Gomovies123 is your ultimate movie database with 10,000+ movies, 5,000+ TV series, actor profiles, genre pages, and yearly archives. Discover, stream, and enjoy cinematic excellence with our comprehensive entertainment platform.',

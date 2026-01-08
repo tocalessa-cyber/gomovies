@@ -1,7 +1,6 @@
-// next.config.js
+// next.config.js - VERSI BENAR
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Wajib untuk Cloudflare Pages + next-on-pages
   images: {
     remotePatterns: [
       {
@@ -30,16 +29,10 @@ const nextConfig = {
         pathname: '/**',
       }
     ],
-    unoptimized: true, // Wajib: Cloudflare Pages tidak support Next.js image optimization
+    unoptimized: true,
   },
-  
-  // Optional: Untuk static export (jika semua halaman static)
-  // output: 'export',
-  
-  // Experimental (opsional)
-  experimental: {
-    // serverComponentsExternalPackages: [], // jika perlu external packages
-  }
+  // HAPUS output: 'export'
+  // HAPUS trailingSlash: true
 }
 
 module.exports = nextConfig

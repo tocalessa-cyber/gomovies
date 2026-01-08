@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getMovieById, getMovieByTitle, searchMoviesAndTv } from '../../../../lib/api'; 
 import WatchClient from './WatchClient';
 
+export const runtime = 'edge';
+
 // Utility function to create a slug from a movie title
 const createSlug = (item) => {
   const title = item.title;

@@ -9,6 +9,8 @@ import Image from 'next/image';
 import { FaCalendar, FaFilm, FaStar, FaArrowLeft, FaArrowRight, FaFilter } from 'react-icons/fa';
 import { getMoviesByYear, getMovieGenres } from '../../../../lib/api';
 
+export const runtime = 'edge';
+
 export default function YearArchivePage() {
   const params = useParams();
   const year = params.year;

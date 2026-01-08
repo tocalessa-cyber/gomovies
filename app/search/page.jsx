@@ -8,6 +8,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { useState, useEffect, use } from 'react'; // Import 'use'
 
+export const runtime = 'edge';
+
 export default function SearchPage({ searchParams }) {
   // **Unwrap searchParams using React.use()**
   const unwrappedSearchParams = use(searchParams); 

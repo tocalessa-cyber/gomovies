@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getTvSeriesById, getSimilarTvSeries, searchMoviesAndTv } from '../../../../lib/api';
 import WatchClient from './WatchClient';
 
+export const runtime = 'edge';
+
 // Fungsi utilitas untuk membuat slug dari judul TV show
 const createSlug = (item) => {
   const title = item.name;

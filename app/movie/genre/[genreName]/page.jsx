@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { getMoviesByGenre, getMovieGenres } from '../../../../lib/api';
 import MovieList from '../../../../components/MovieList';
 
+export const runtime = 'edge';
+
 export async function generateMetadata({ params }) {
   // Await params sebelum mengakses propertinya
   const { genreName } = await params;

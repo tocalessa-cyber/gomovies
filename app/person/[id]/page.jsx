@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { FaFilm, FaTv, FaStar, FaCalendar, FaMapMarkerAlt, FaUser } from 'react-icons/fa';
 import { getPersonById, getPersonMovieCredits, getPersonTvCredits } from '../../../lib/api';
 
+export const runtime = 'edge';
+
 export default function PersonDetailPage() {
   const params = useParams();
   const personId = params.id;

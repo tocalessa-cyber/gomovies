@@ -7,6 +7,8 @@ import {
 import TvSeriesList from '../../../../components/TvSeriesList';
 import Link from 'next/link';
 
+export const runtime = 'edge';
+
 // Utility untuk membuat slug dari nama genre yang SEO-Friendly.
 const createGenreSlug = (name) => {
   if (!name) return '';

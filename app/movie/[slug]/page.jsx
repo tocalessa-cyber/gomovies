@@ -15,6 +15,8 @@ import {
 import MovieList from '../../../components/MovieList';
 import TvSeriesList from '../../../components/TvSeriesList';
 
+export const runtime = 'edge';
+
 const CATEGORIES = ['now_playing', 'popular', 'top_rated', 'upcoming'];
 
 // Utility function to create a slug from a movie title
