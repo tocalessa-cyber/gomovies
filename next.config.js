@@ -41,7 +41,10 @@ const nextConfig = {
   // Experimental untuk Cloudflare
   experimental: {
     scrollRestoration: true,
-  }
+  },
+  
+  // TAMBAHKAN INI! ↓ (DI LUAR experimental!)
+  output: 'export', // Static HTML export
 }
 
 module.exports = nextConfig
