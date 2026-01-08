@@ -1,0 +1,4 @@
+name = "gomovies"
+compatibility_date = "2026-01-08"
+main = "./.next/server/app-paths-manifest.json"
+compatibility_flags = ["nodejs_compat"]
