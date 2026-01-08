@@ -1,4 +1,4 @@
-// next.config.js - VERSI BENAR
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -31,8 +31,17 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
-  // HAPUS output: 'export'
-  // HAPUS trailingSlash: true
+  
+  // WAJIB untuk Cloudflare Pages SPA routing
+  trailingSlash: false,
+  
+  // Untuk fix 404 issues
+  skipTrailingSlashRedirect: true,
+  
+  // Experimental untuk Cloudflare
+  experimental: {
+    scrollRestoration: true,
+  }
 }
 
 module.exports = nextConfig
