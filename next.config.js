@@ -43,8 +43,7 @@ const nextConfig = {
     scrollRestoration: true,
   },
   
-  // TAMBAHKAN INI! ↓ (DI LUAR experimental!)
-  output: 'export', // Static HTML export
+  // HAPUS: output: 'export'
 }
 
 module.exports = nextConfig
